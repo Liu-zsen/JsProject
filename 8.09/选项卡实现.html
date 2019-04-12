@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>选项卡</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				font-family: "微软雅黑" , serif;
+				font-size: 14px;
+			}
+			ul,li{list-style: none;}
+			.box{
+				position:relative;
+				width: 361px;
+				height: 580px;
+				margin: 50px auto 50px;
+			}
+			.box .bg{
+				position:absolute;
+				width: 326px;
+				height: 580px;
+			}
+			.box .bg img{
+				position:absolute;
+				display: none;
+			}
+			.box .bg p{
+				position:absolute;
+				display: inline-block;
+				width:100%;
+				line-height: 30px;
+				background: #0009;
+				bottom: 0;
+				text-align: center;
+				color: #fff;
+			}
+			.box-nav{
+				position: absolute;
+				right: 0;
+				width: 35px;
+			}
+			.box  .box-nav li{
+				width: 35px;
+				height: 35px;
+				line-height: 35px;
+				margin-bottom: 10px;
+				background: #000;
+				color:#FFF;
+				text-align: center;
+				vertical-align: middle;
+				cursor: pointer;
+			}
+			.box  .box-nav  .activ{
+				background: #f60;
+			}
+			.box .bg .block{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<div class="bg">
+				<img class="block on" src="img/g1.jpg" width="326" height="580" alt="" />
+				<img src="img/g2.jpg" width="326" height="580" alt="" />
+				<img src="img/g3.jpg" width="326" height="580" alt="" />
+				<img src="img/g4.jpg" width="326" height="580" alt="" />
+				<p><span>1</span>/4</p>
+			</div>
+			<div class="box-nav">
+				<ul>
+					<li class="goudan activ">1</li>
+					<li class="goudan">2</li>
+					<li class="goudan">3</li>
+					<li class="goudan">4</li>
+				</ul>
+			</div>	
+		</div>
+		<script type="text/javascript">
+			var abox = document.getElementById("box"),
+				aimg = abox.getElementsByTagName("img"),
+				ali = abox.getElementsByTagName("li"),
+				aSpan  = abox.querySelector(".bg p span")
+				length = ali.length,
+				flag = true,
+				index = 0
+				
+				
+/*				for (var i=0;i<length;i++) {     //方法1
+					
+					ali[i].atStart = i   //自定义属性用来存储 当前的i
+					Kshi = ali[i].className   //存储原来的classname
+					ali[i].onclick = function(){
+						
+						aimg[index].className = ""  //去掉上一个属性
+						ali[index].className = Kshi  //
+						index = this.atStart			//将当前的 i 赋给 index
+						aimg[index].className = "block"  //给当前点击的加上属性
+						ali[index].className = Kshi+" activ"  //给当前点击的加上属性
+						
+						aSpan.innerHTML = this.atStart+1
+					}
+					
+				}*/
+				for(var i=0;i<length;i++){		//方法2
+					
+					ali[i].atStart = i   //自定义属性用来存储 当前的i
+					Kshi = ali[i].className  //
+					
+					ali[i].onclick = function(){
+						index = this.atStart
+
+						//全部隐藏
+						for(var j=0;j<length;j++){
+							ali[j].className = ""
+							aimg[j].className = ""
+						}
+						
+						//显示当前的
+						aimg[index].className="block";
+						this.className= Kshi+" activ";
+						aSpan.innerHTML = this.atStart+1
+					}
+				}
+				
+		</script>
+	</body>
+</html>

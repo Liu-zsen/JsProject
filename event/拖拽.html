@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件拖拽</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				background: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+			var box = document.getElementById('box')
+			box.onmousedown = function(e){
+				e = e || window.event;
+				var Xc = e.clientX, Yc = e.clientY; //获取鼠标x，y初始位置
+				var St = box.offsetTop
+				var Sl = box.offsetLeft
+				
+				document.onmousemove = function(e){
+					e = e || window.event;
+					var Xm = e.clientX, Ym = e.clientY; //获取移动的x，y当前位置
+					var ranGX = Xm - Xc ,ranGY = Ym - Yc	//当前位置-初始位置  = 变化量
+					box.style.left = ranGX+Sl + "px"
+					box.style.top = ranGY+St + "px"
+				}
+			}
+			box.onmouseup = function(){
+				document.onmousemove = null //鼠标抬起，清空事件
+				console.log('UP!!')
+			}
+		</script>
+	</body>
+</html>

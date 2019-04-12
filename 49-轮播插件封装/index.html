@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>淘宝无缝轮播</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#wrap{
+				position: relative;
+				width: 520px;
+				height: 280px;
+				margin: 50px auto;
+			}
+			#wrap .pic{
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			#wrap .pic ul ,#wrap .tab ul{
+				position: relative;
+				width: 100%;
+				height: 100%;
+				list-style: none;	
+			}
+			#wrap .pic ul li{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+			#wrap .pic ul li.on{
+				display: block;
+				opacity: 1;
+			}
+			#wrap .tab{
+				position: absolute;
+				bottom: 10px;
+				left: 50%;
+				min-width: 150px;
+				height: 20px;
+				line-height: 20px;
+				padding: 0 8px;
+				transform: translate(-50%,0);
+				background: rgb(255,255,255);
+				background: rgba(255,255,255,.7);
+				border-radius:15px;
+				text-align: center;
+			}	
+			#wrap .tab ul li{
+				display: inline-block;
+				width: 12px;
+				height: 12px;
+				margin: 0 5px;
+				background-color: #fff;
+				border-radius: 50%;
+			}
+			#wrap .tab ul li.on{
+				background-color: #db192a;
+			}
+			#wrap .btn div{
+				display: none;
+				position: absolute;
+				top: 45%;
+				width: 30px;
+				height: 50px;
+				line-height: 50px;
+				background: rgb(0,0,0);
+				background: rgb(0,0,0,.7);
+			}
+			#wrap:hover .btn div{
+				display: block;
+			}
+			#wrap .btn div:after{
+				position: absolute;
+				display: inline-block;
+				content: "";
+				top: 30%;
+				width: 10px;
+				height: 10px;
+				border: 3px solid;
+				border-color: #fff #fff transparent transparent ;
+			}
+			
+			#wrap .btn div:nth-child(1){
+				left: 0;
+			}
+			#wrap .btn div:nth-child(2){
+				right: 0;
+			}
+			#wrap .btn div:nth-child(1):after{
+				right: 5%;
+				transform: rotate(-135deg);
+			}
+			#wrap .btn div:nth-child(2):after{
+				left: 5%;
+				transform: rotate(45deg);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="pic">
+				<ul>
+					<li><img src="img/01.webp" alt="" /></li>
+					<li><img src="img/02.jpg" alt="" /></li>
+					<li><img src="img/03.jpg" alt="" /></li>
+					<li><img src="img/04.jpg" alt="" /></li>
+					<li><img src="img/05.webp" alt="" /></li>
+				</ul>
+			</div>
+			<div class="tab">
+				<ul>
+					<li class="on"></li><li></li><li></li><li></li><li></li>
+				</ul>
+			</div>
+			<div class="btn">
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			(function(){
+				let $wrap = $("#wrap"),
+					$pic = $wrap.find(".pic ul"),
+					$ali  = $wrap.find(".pic ul li"),	//获取图片列表
+					$tab  = $wrap.find(".tab ul li"),
+					$btn = $wrap.find(".btn div"),
+					len = $ali.length,
+					index = 0,
+					clickTime = 0,
+					timer = null;
+					
+			//初始化banner
+				width = $ali.width() //获取图片列表宽
+				$pic.width((len+10)*width).css("marginLeft",-width).parent().css("overflow","hidden")
+				$ali.css({
+					position : "static",
+					float : "left",
+					width : width
+				})
+				
+				$pic.append($ali.eq(0).clone(true));	//将第一张图片克隆在最后
+				$pic.prepend($ali.last().clone(true))	//将最后一张图片克隆在第一
+				
+			//Tab移入事件
+				$tab.mouseenter(function(){
+					let x = $(this).index();
+					clearTimeout(timer);
+					timer = setTimeout(change,200,x)
+				})
+			
+			//左右点击事件
+			$btn.click(function(){
+				if(new Date - clickTime>300){
+					let x = index;
+					$(this).index()?x++:x--;
+					change(x)
+				}
+				clickTime = new Date
+			})
+			
+			//自动轮播
+				$wrap.hover(function(){
+					clearInterval(window.bannerTime)
+				},auto());
+				function auto(){
+				clearInterval(window.bannerTime)
+				window.bannerTime = setInterval(function(){
+						let x = index;
+						x++;
+						change(x);
+					},2600);
+				return auto;
+				}
+			
+			//变化函数
+				function change(i){
+					let newI = i;
+					i %= len;
+					if(i<0) i=len-1;
+					$tab.eq(index).removeClass("on");
+					index = i
+					$pic.stop().animate({
+						marginLeft : -(newI+1)*width
+					},function(){
+						if(newI===len || newI === -1){
+							$pic.css("marginLeft",-(index+1)*width)
+						}
+					})
+					$tab.eq(index).addClass("on");
+				}
+			})();
+		</script>
+	</body>
+</html>

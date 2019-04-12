@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>自定义复选框</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				font-family: "微软雅黑" , serif;
+				font-size: 14px;
+			}
+			ul,li{list-style: none;}
+			.box{
+				width: 615px;
+				height: 150px;
+				margin: 50px auto 50px;
+			}
+			.box h4{
+				border-bottom: 1px dashed #000;
+				line-height: 25px;
+			}
+			.box ul li{
+				float:left;
+				width: 50px;
+				padding: 5px 0 5px 35px;
+				background: url(img/ckbg1.jpg) no-repeat 10%;
+			}
+			.box ul{
+				margin: 10px;
+			}
+			.box ul:after{
+				content:"";
+				display: block;
+				clear: both;
+			}
+			.box ul .bgchanger{
+				background: url(img/ckbg2.jpg) no-repeat 10%;
+			}
+			.box ul .col{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<h4>你最喜欢的英雄</h4>
+			<ul>
+				<li class="goudan">亚索</li>
+				<li class="goudan">女警</li>
+				<li class="goudan col">瑞雯</li>
+				<li class="goudan col">蛮王</li>
+				<li class="goudan">盲僧</li>
+				<li class="goudan">提莫</li>
+				<li class="goudan col">德莱文</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var aLi = document.getElementsByTagName("li"),
+				length = aLi.length,
+				index = 0,
+				CSname = true;
+				
+			for(var i=0;i<length;i++){
+				
+				aLi[i].atStart = i;  //自定义属性存储 i
+				Kshi = aLi[i].className  //存储li原始的ClassName  值
+				aLi[i].onclick = function(){
+					if (CSname) { 				//如果为true  执行
+						index = this.atStart;		//将自定义存储的值赋给 索引
+						aLi[index].className += " bgchanger";  //将 新的className追加到li
+						CSname = false;					
+					} else{						//如果为false 执行
+						index = this.atStart;
+						aLi[index].className = Kshi;
+						CSname = true;
+					}	
+						
+				}
+				
+			}
+		</script>
+	</body>
+</html>

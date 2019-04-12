@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			
+			<form action="1.php" method="get">
+				<input type="text" name="user" />
+				<input type="text" name="pwd" />
+				<input type="submit" value="提交"/>
+			</form>
+		</div>
+		<script>
+			/*
+			 * ajax 	异步加载  / 局部更新
+			 * 
+				ajax 技术: 使用js向后台传数据/获取后台数据的一种方法
+						   *不能跨域;
+						   * 需要服务器环境才能运行ajax;
+			 * 
+			 * 1.创建 ajax对象  ： new XMLHttpRequest 
+			 * 
+			 * 2.open() 请求    
+			 * 
+			 * 3.send() 发送
+			 * 
+			 * 4.监听事件操作
+			 *  .readyState  请求状态码
+			 * 	0 	: 请求还没有建立
+			 *  1	: 请求建立了,还没有发送（相当于open()执行了）
+			 * 	2	: 请求正在发送  （send()）
+			 * 	3	: 请求已经受理，并有一部分数据可用
+			 * 	4	: 请求完全受理。
+			 * 
+			 *  .onredeystatechange事件  请求状态码发生改变的时候触发
+			 * 	.responseText 	请求完成后，接收后台返回的内容
+			 * 
+			 */
+/*
+	//get
+			let xhr = new XMLHttpRequest(); //new 一个ajax对象
+			xhr.open("get","1.php?user=523&pwd=1515151",true);
+			xhr.send();
+			xhr.onreadystatechange = function(){
+				//console.log(this.readyState)
+				if(this.readyState ===4 ){
+					console.log(this.responseText)
+				}
+			}
+*/
+	//post  post的时候：
+			/*传输的数据需要写在send里面
+			 *发送之前需要设置数据格式
+			 * .setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+			 */
+	
+		 	let xhr = new XMLHttpRequest();
+		 		xhr.open("post","2.php",true);
+		 		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		 		xhr.send("user=666&pwds=159");
+		 		xhr.onreadystatechange = function(){
+		 			if(this.readyState === 4){
+		 				console.log(this.responseText)
+		 			}
+		 		}
+		</script>
+	</body>
+</html>

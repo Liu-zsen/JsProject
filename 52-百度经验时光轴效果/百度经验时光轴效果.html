@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>百度经验时光轴效果</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul,li{list-style: none;}
+			#header{
+				display: fixed;
+				width: 100%;
+				height: 655px;
+				margin: auto;
+				text-align: center;
+			}
+			#nav{
+				display: none;
+				position: fixed;
+				top: 0;
+				width: 100%;
+				height: 40px;
+				background: #fbfbfb;
+				z-index: 999;
+			}
+			#main{
+				position: relative;
+				width: 1070px;
+				margin: auto;
+			}
+			#main .content{
+				width: 680px;
+			}
+			#main .content h3{
+				font-size: 24px;
+				font-weight: normal;
+				border-bottom: 1px solid #aaa;
+				padding-bottom: 8px;
+			}
+			#main .content ul{
+				width: 100%;
+				height: 100%;
+				padding-top:30px ;
+			}
+			#main .content ul li{
+				position: relative;
+				margin-left: 25px;
+				padding-bottom: 35px;
+				padding-left: 25px;
+				border-left: 2px dotted #aaa;
+			}
+			#main .content ul li p{
+				line-height: 28px;
+				padding-bottom: 10px;
+			}
+			#main .content ul li .num{
+				position: absolute;
+				top:0;
+				left: -16px;
+				width: 32px;
+				height: 32px;
+				line-height: 32px;
+				background: #5bc648;
+				border-radius: 50%;
+				text-align: center;
+				color: #fff;
+			}
+			#fnum{
+				display: none;
+				position: fixed;
+				top:40px;
+				height: 32px;
+				overflow: hidden;
+				margin-left: 11px;
+				z-index: 99;
+				background: #fff;
+			}
+			#fnum .num{
+				width: 32px;
+				height: 32px;
+				line-height: 32px;
+				background: #bbb;
+				border-radius: 50%;
+				text-align: center;
+				color: #fff;			
+				cursor: pointer;
+			}
+			#fnum .num.on{
+				background: #5BC648;
+			}
+			.footer{
+				height: 1000px;
+				background: #BBBBBB;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			<img src="img/header.png" alt="" />
+			<div id="nav"><img src="img/top.png" alt="" /></div>
+		</div>
+		<div id="main">
+			<div id="fnum">
+				<div class="num">1</div>
+				<div class="num">2</div>
+				<div class="num">3</div>
+				<div class="num">4</div>
+				<div class="num">5</div>
+				<div class="num">6</div>
+				<div class="num">7</div>
+			</div>
+			<div class="content">
+				<h3>方法/步骤</h3>
+				<ul class="side">
+					<li>
+						<p>试用后油法，将面团揉成团，面包机30分钟即可！牛奶要用凉的，因为面包机揉面温度较高！</p>
+						<img src="img/1.jpg" alt="" />
+						<div class="num">1</div>
+					</li>
+					<li>
+						<p>揉好的面团，用手抻开可以抻成薄一些的膜，有一定的扩展性！</p>
+						<img src="img/2.jpg" alt="" />
+						<div class="num">2</div>
+					</li>
+					<li>
+						<p>然后揉成团，放入面包机中就行第一次发酵，发酵约1小时，是原面团的2倍大！用手按下去无回缩就证明发酵好了！</p>
+						<img src="img/3.jpg" alt="" />
+						<div class="num">3</div>
+					</li>
+					<li>
+						<p>发酵好的面团排气揉光滑，称重</p>
+						<img src="img/4.jpg" alt="" />
+						<div class="num">4</div>
+					</li>
+					<li>
+						<p>将面团平均分成5份，揉成光滑的面团！盖上保鲜膜醒发15分钟</p>
+						<img src="img/5.jpg" alt="" />
+						<div class="num">5</div>
+					</li>
+					<li>
+						<p>然后揉成你想放的模具中，没有就用纸拖，或可以不用也行。</p>
+						<img src="img/6.jpg" alt="" />
+						<div class="num">6</div>
+					</li>
+					<li>
+						<p>将烤箱中放一碗热水保持湿度，把面包生坯放入烤箱就行二次发酵，烤箱温度不易超过30度，发酵40分钟！</p>
+						<img src="img/7.jpg" alt="" />
+						<div class="num">7</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer"></div>
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script>
+			window.onload = function(){
+				(function(){
+					let side = $("#main").find(".content .side");	//
+					let sli = $("#main").find(".content .side li");
+					let SideArr = [],fnum =  $("#fnum");
+					let Fsli = fnum.find(".num"),len = Fsli.length;
+					let navH = $("#nav")
+					let index = 0;
+					
+					let minT = side.offset().top;	//最小值
+					let maxT = side.height() + minT-len*fnum.height() - navH.height();	//最大值
+					
+					sli.each(function(i){
+						SideArr[i] = $(this).offset().top	//遍历每个Sli的距离文档顶部的高度
+					})
+					
+					$(window).scroll(function(){
+						let scrollT = $(document).scrollTop();	//实时滚动高
+						//判断顶部吸顶盒的显示影城隐藏
+						navH[scrollT <= 200?"hide":"show"]();	
+						if(scrollT <= minT){
+							fnum.hide()
+						}else if(scrollT >= maxT){
+							let ss = scrollT-maxT
+							let x = Math.ceil(ss/Fsli.height()) //向上取正
+							fnum.css("top",-Fsli.height()*x+navH.height())
+							console.log(Fsli.height()*x)
+						}else{
+							fnum.css("top",navH.height())		//初始化Top
+							fnum.show()
+							for(let i=0;i<len;i++){
+								if(scrollT>= SideArr[i] - (i+1)*Fsli.height()){
+									index = i
+								}
+							}
+							fnum.height((index+1)*Fsli.height())
+							Fsli.eq(index).addClass("on").siblings().removeClass("on")
+						}
+						
+					})
+					//side点击事件，直接操作滚动高
+					Fsli.click(function(){
+						index = $(this).index()
+						let scrollH = SideArr[index] - index*Fsli.height() - navH.height()
+						$("body,html").stop().animate({	
+							scrollTop : scrollH	
+						})
+					})
+			    })();		
+			}
+
+		</script>
+	</body>
+</html>

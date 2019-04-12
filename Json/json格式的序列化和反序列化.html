@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>json格式的序列化和反序列化</title>
+	</head>
+	<body>
+		
+		<script>
+			//json格式的序列化
+			let obj = {
+				a: 123,
+				b: 456,
+				c: 789
+			}
+			let x = JSON.stringify(obj);
+			console.log(x)
+			
+			//json格式的反序列化
+			let data = JSON.parse(x)
+			console.log(data)
+		</script>
+	</body>
+</html>

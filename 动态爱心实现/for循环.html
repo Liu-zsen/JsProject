@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	<style>
+		*{
+			margin:0;
+			padding: 0;
+		}
+		
+		#box{
+			position: relative;
+			margin: auto;
+			background: #ccc;
+		}
+				
+		#box div{
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			background: pink;
+			line-height: 50px;
+			text-align: center;
+		}
+
+	</style>
+	</head>
+	<body>
+		
+		<div id="box"></div>
+		
+		<script type="text/javascript">
+			var obox = document.getElementById("box"),
+				length = 7,
+				mid = length/2;
+				obox.style.width = length*50/2 + "px";
+				obox.style.height = length*50 + "px";
+				
+				
+			for(var i=0;i<length;i++){
+				if(mid<i){
+					left = (length-i-1)*50;
+					Top = i*50;
+				}else{
+					left = i*50;
+					Top = i*50;
+				}
+
+				obox.innerHTML += "<div style='top:+"+Top+"px;left:"+left+"px'>"+(i+1)+"</div>"
+			}
+		</script>
+		
+	</body>
+</html> 

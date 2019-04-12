@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>时间版运动框架</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: relative;
+				width: 100px;
+				height: 80px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+			var oBox = document.getElementById("box")
+			
+			move( oBox ,"left",500,2000);
+			function move(obj,arrt,end,time){
+				//兼容
+				window.requestAnimationFrame = window.requestAnimationFrame || function(a){return setTimeout(a,1000/60)};
+				window.cancelRequestAnimationFrame = window.cancelRequestAnimationFrame || clearTimeout ;		
+				
+				var cssJoin = obj.currentStyle || getComputedStyle(obj) //获取目标的window属性
+				var state = parseFloat(cssJoin[arrt]) //属性变化时初始的值
+				var total = end - state 	//总的变化路程
+				var stime = new Date();//获取执行动画前的时间
+				
+				(function fn(){
+					var ntime = new Date()				//获取执行动画之后的时间	
+					var Ti = ntime - stime    	//
+					var contin = Ti / time;					    
+					console.log(Ti);
+					if (contin>=1) {
+						contin = 1
+					} else{
+						requestAnimationFrame(fn)
+					}
+					s = total*contin + state		//运算公式：总路程*时间比例+初始值
+					obj.style[arrt] = s+"px"
+				})();
+				
+			}
+
+		</script>
+	</body>
+</html>

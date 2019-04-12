@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>对象的深浅拷贝</title>
+	</head>
+	<body>
+		<script>
+			
+			//es5 -- 
+			
+			let a = {
+					x : 123,
+					y : 458,
+					z : ["a1","b2","sad111",{n:"zz"}]
+				};
+			
+			let b = {
+				i : 1,
+				j : 3,
+				k : 7
+			};
+			
+			let d = ["a1","b2","sad111"]
+			
+		//1.对象的深拷贝  		
+/*			function extend(){
+				let r = {}	
+				for (let i = 0; i < arguments.length; i++) {
+				    let e = arguments[i]
+					r = (e instanceof Array)?[]:{}//也可以用Array.isArray(),但是不兼容IE8以下
+					
+					for(let key in e){
+						if(/object/i.test(typeof e[key])){
+							r[key] = extend(e[key])
+						}else{
+							r[key] = e[key]
+						}
+					}
+				}
+				return r
+			}
+			const c = extend(a)*/
+			
+			
+			
+			//2.对象的深浅浅拷贝  
+/*			function Extend(e,deep){
+				//deep 为bool类型，true 开启深拷贝  ， false 为浅拷贝;
+				//默认为false;浅拷贝，只拷贝第一层
+				let obj = {}
+				
+				//如果是传进来的是数组类型，则改变obj的类型
+				if(e instanceof Array){
+					obj = []
+				}
+				
+				for(let key in e){
+					if( !!deep &&  typeof e[key] === "object" && deep!==null){
+						obj[key] = Extend(e[key],deep)
+					}else{
+						obj[key] = e[key]
+					}
+				}
+				
+				return obj
+			}
+			const oP = Extend(a,true)
+			oP.z.push("s")
+			console.log(oP)
+	*/
+	
+			//	3.	多个对象的继承(针对原型，不考虑数组)
+			function extend(){
+				let obj = {}
+				//遍历arguments
+				for(let i=0,len=arguments.length;i<len;i++){
+					let e = arguments[i]
+					for(let key in e){
+						obj[key] = (/object/i.test(e[key]))?extend(e[key]):e[key]	//三目
+//						if(/object/i.test(e[key])){
+//							obj[key] = extend(e[key])
+//						}else{
+//							obj[key] = e[key]
+//						}
+					}
+				}
+				return obj
+			}
+			let mObj = extend(a,b)
+			console.log(mObj)
+	
+
+	/******ES6*******/ 	
+/*		
+		//1.可以利用用JSON.stringify()，和JSON.parse()之间进行拷贝 ，并且两个方法都返回一个新的数组
+		//	这种拷贝，不支持函数
+		let newA = JSON.parse(JSON.stringify(a));
+		
+		//2.利用es6的类 继承
+			//父类
+			class fn{
+				//construtor函数里的是私有属性
+				constructor(){	
+					this.on = "123"
+					this.name = "Tony"
+				}
+				//construtor 外的都是公共属性	
+				amazed(){
+					console.log(this.name)
+				}
+			}
+			
+			//子类的继承
+			class P2 extends fn{
+				constructor(){
+					super()		// 语法规定：子类继承，必须加上super()  
+					this.shuai = "你真是个大帅逼"
+					this.tm = "你真他娘的不要脸"
+				}
+				run(){
+					console.log(this.name,this.shuai)
+				}
+			}
+			
+			//实例化对象
+			let P0 = new fn()
+			let P1 = new P2()
+	*/		
+		</script>
+	</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件代理/事件委托</title>
+		<style>
+			*{
+				margin:0;
+				padding: 0;
+			}
+			#box{
+				width:150px;
+				margin: 20px auto;
+				box-shadow: 0 0 2px 1px #aaa;
+				color: #666;
+				overflow: hidden;
+			}			
+			#box h4{
+				width: 100%;
+				background-color:#eee;
+			}
+			ul{
+				display: none;	
+				width:100%;
+				background: #eee;
+				list-style: none;
+			}
+			ul li{
+				width:100%;
+				background: #ccc;
+				margin:1px 0;
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<h4>姓名</h4>
+			<ul>
+				<li>夏日</li>
+				<li>夏月</li>
+				<li>夏明</li>
+				<li>夏面</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var obox = document.getElementById('box')
+			obox.onclick = function(e){
+				e = e || event
+				if(e.target.nodeName === "H4"){
+					obox.children[1].style.display = "block"
+				}
+			}
+			document.onclick = function(e){
+				e = e || event
+				if(e.target.nodeName !== "H4" || e.target.nodeName !== "Li"){
+					obox.children[1].style.display = "none"
+				}
+			}
+		</script>
+	</body>
+</html>

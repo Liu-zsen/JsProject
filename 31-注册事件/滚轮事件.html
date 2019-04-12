@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>滚轮事件</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script type="text/javascript">
+			for(var i=0;i<200;i++){
+				document.write(""+i+i+i+"<br>")
+			}
+//			document.onmousewheel =function(e){			//主流+IE
+//				e = e || window.event
+//				console.log(e.wheelDelta)
+//			}
+//			document.addEventListener("mousewheel",function(e){		//主流+IE
+//				console.log(e.wheelDelta)
+//			},false)
+//			document.addEventListener("DOMMouseScroll",function(e){		//兼容火狐
+//				console.log(e.detail)
+//			},false)
+		
+		//兼容写法
+		mousewheel(document,function(a,d){
+			if(d>0){
+				console.log('正在向上滚动')
+			}else{
+				console.log('正在向下滚动！')
+			}
+			return false
+		})
+		
+		function mousewheel(obj,Fn){
+				function eFn(e){
+					e = e || window.event
+					var detail = (e.wheelDelta/120) || -e.detail/3
+					if(Fn.call(this,e,detail) === false ){
+						e.preventDefault()
+					}
+				} 
+				if(document.onmousewheel !== undefined){		//将判断onmousewheel的值
+					document.addEventListener?obj.addEventListener('mousewheel',eFn,false):obj.attachEvent('onmousewheel'.eFn)
+				}else{
+					obj.addEventListener('DOMMouseScroll',eFn,false)
+				}
+		}
+		
+		
+//						if(document.onmousewheel === null){		//将判断onmousewheel的值
+//					document.addEventListener?obj.addEventListener('mousewheel',eFn,false):obj.attachEvent('onmousewheel'.eFn)
+////					if(document.addEventListener){
+////						obj.addEventListener('mousewheel',eFn,false)	//做主流浏览器兼容
+////					}else{
+////						obj.attachEvent('onmousewheel'.eFn)		//做IE浏览器兼容
+////					}
+//				}else{
+//					obj.addEventListener('DOMMouseScroll',eFn,false)
+//				}
+		</script>
+	</body>
+</html>

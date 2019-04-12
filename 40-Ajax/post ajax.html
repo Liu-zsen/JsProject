@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>发送Json</title>
+	</head>
+	<body>
+		<div id="box">
+			<form action="">
+			<label>账户：</label>
+			<input type="" name="user" id="user" />
+			<label>密码：</label>
+			<input type="" name="pwd"  />
+			<label for="">电话</label>
+			<input type="" name="tel"  />
+			<input type="button" id="btn"   value="发送Ajax" />
+			</form>
+		</div>
+		<script type="text/javascript">
+		let oBtn = document.getElementById('btn');
+			atxt = document.querySelectorAll('#box input');
+			date = "";
+				
+			
+
+  				oBtn.onclick = function(){
+				for(let i=0;i<atxt.length;i++){
+					date += atxt[i].name+ "=" + atxt[i].value + "&";
+					
+				}	
+				console.log(date)
+				let xhr = new XMLHttpRequest();
+				xhr.open('post','2.php',true);
+				xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+				xhr.send(date);
+				xhr.onreadystatechange = function(){
+					if(this.readyState === 4){
+						console.log(this.responseText)	
+					}
+				}
+			}
+
+			
+		</script>
+	</body>
+</html>

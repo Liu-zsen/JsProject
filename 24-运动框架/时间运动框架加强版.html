@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>时间运动框架加强版</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: relative;
+				top:0;
+				left: 0;
+				width: 100px;
+				height: 80px;
+				background-color: pink;
+				opacity: 1;
+				z-index: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		
+		<script>
+			var oBox = document.getElementById("box")
+			
+			move( oBox ,{
+				width:300,
+				height:120,
+				top:190,
+				left:250,
+				opacity:.2,
+				zIndex:1
+			},2000);
+			function move(obj,json,time){
+				//兼容
+				window.requestAnimationFrame = window.requestAnimationFrame || function(a){return setTimeout(a,1000/60)};
+				window.cancelAnimationFrame = window.cancelAnimationFrame || clearTimeout ;		
+				
+				var cssJoin = obj.currentStyle || getComputedStyle(obj) //获取目标的window属性
+//				var state = parseFloat(cssJoin[arrt]) //属性变化时初始的值/
+				var state = {} ,total= {} ; //定义一个json
+				for(var key in json){
+					state[key] = parseFloat(cssJoin[key] )  	//将
+					total[key] = json[key] - state[key]	//所有属性总的变化路程
+				}
+				
+				var stime = new Date();//获取执行动画前的时间
+				
+				(function fn(){
+					var ntime = new Date()				//获取执行动画之后的时间	
+					var Ti = ntime - stime    	//
+					var contin = Ti / time;		
+					if (contin>=1) {
+						contin = 1
+					} else{
+						requestAnimationFrame(fn)
+					}
+					for(key in json){
+						if(key==="opacity" || key==="zIndex"){
+							var val = total[key]*contin + state[key]
+							obj.style[key] = val
+							obj.style.filter = "Alpha(opacity="+val*100+")" ;
+							console.log(val);
+						}else{
+							obj.style[key] = total[key]*contin + state[key]+"px"
+						}
+					}
+//					s = total*contin + state		//运算公式：总路程*时间比例+初始值
+				})();
+				
+			}
+
+		</script>
+	</body>
+</html>

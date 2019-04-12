@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>滑动门效果</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				overflow: hidden;
+				width: 750px;
+				height: 0;
+				margin: 50px auto;
+			}
+			#box img{
+				width: 750px;
+				height: 450px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<img src="img/11.jpg">
+		</div>
+		<script type="text/javascript">
+			var obox = document.getElementById("box")
+			var hig = 0,end = 450
+			window.a = setInterval(function(){
+				hig += 7
+				if(hig>=end){
+					hig = end
+					clearInterval(window.a)
+				}
+				obox.style.height = hig+"px"
+			console.log(hig)
+			},13)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>demo</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width: 500px;
+				height: 200px;
+				margin: 50px auto;
+				box-shadow: 0 0 5px 1px #aaa;
+				text-align: center;
+				line-height: 200px;
+			}
+			.box ul{
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.box ul li{
+				float: left;
+				width: 40px;
+				height: 60px;
+				list-style: none;
+			}
+			.box .dot{
+				background: url(img/d.png) no-repeat 50%;
+			}			
+			.box .i0{
+				background: url(img/0.png) no-repeat 50%;
+			}			
+			.box .i1{
+				background: url(img/1.png) no-repeat 50%;
+			}			
+			.box .i2{
+				background: url(img/2.png) no-repeat 50%;
+			}			
+			.box .i3{
+				background: url(img/3.png) no-repeat 50%;
+			}			
+			.box .i4{
+				background: url(img/4.png) no-repeat 50%;
+			}			
+			.box .i5{
+				background: url(img/5.png) no-repeat 50%;
+			}			
+			.box .i6{
+				background: url(img/6.png) no-repeat 50%;
+			}			
+			.box .i7{
+				background: url(img/7.png) no-repeat 50%;
+			}			
+			.box .i8{
+				background: url(img/8.png) no-repeat 50%;
+			}		
+			.box .i9{
+				background: url(img/9.png) no-repeat 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul>
+				<li class="i0 num"></li>
+				<li class="i0 num"></li>
+				<li class="dot"></li>
+				<li class="i0 num"></li>
+				<li class="i0 num"></li>
+				<li class="dot"></li>
+				<li class="i0 num"></li>
+				<li class="i0 num"></li>
+			</ul>
+		</div>
+		<script>
+			var ali = document.querySelectorAll(".box .num")
+			var len = ali.length
+				
+			setInterval(Tjump(),1000);
+			function Tjump(){
+				var time = new Date()
+				var hh = time.getHours();
+				var mm = time.getMinutes();
+				var ss= time.getSeconds();
+				
+				hh = fn(hh)
+				mm = fn(mm)
+				ss = fn(ss)
+				var nowt = hh +":" + mm +":" + ss 
+				var str = ""+ hh + mm + ss   //以空字符串拼接数字
+				for(var i=0;i<len;i++){
+					ali[i].className = "i"+ str.charAt(i)+" num"
+				}
+				return Tjump
+			};
+			function fn(n){
+				if(n<10){
+					n = "0"+ n
+				}
+				return n
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>练习-全屏滚动</title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				font-size: 14px;
+				overflow: hidden;
+			}
+			a{text-decoration: none;color:rgba(255,255,255,.8)}
+			ul,li{list-style: none;}
+			#header{
+				position: fixed;
+				top: 25px;
+				width: 100%;
+				height: 47px;
+				line-height: 47px;
+				z-index: 2;
+			}
+			#header .logo{
+				float: left;
+				width: 226px;
+				height: 47px;
+				margin-left: 50px;
+			}
+			#header .nav{
+				position: relative;
+				float: right;
+				margin-right: 50px;
+			}
+			#header .nav ul{
+				position: relative;
+				z-index: 2;
+			}
+			#header .nav ul li{
+				float: left;
+				margin-left: 50px;
+			}
+			#header .nav .border{
+				position:absolute;
+				top: 8px;
+				left: 31px;
+				width: 60px;
+				height: 30px;
+				border: 1px solid #fff;
+				border-radius:20px;
+			}
+			#content {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+			#content .conChild:nth-child(1){
+				background: url(img/1.jpg);
+			}
+			#content .conChild:nth-child(2){
+				background: url(img/2.jpg);
+			}
+			#content .conChild:nth-child(3){
+				background: url(img/3.jpg);
+			}
+			#content .conChild:nth-child(4){
+				background: url(img/4.jpg);
+			}
+			#box #content .conChild{
+				height: 100%;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-attachment:fixed;
+			}
+			#slider{
+				position: fixed;
+				top: 50%;
+				left:50px;
+				width: 110px;
+				height: 290px;
+				padding-top: 5px;
+				margin-top: -80px;
+				background: url(img/nav.png) no-repeat;
+			}
+			#slider ul li{
+				width: 100%;
+				height: 21px;
+				line-height: 21px;
+				margin-bottom: 56px;
+				text-align: right;
+				color:rgba(255,255,255,.8);
+				cursor: pointer;
+			}
+			#slider ul li.on{
+				background: url(img/nav_cho.png) no-repeat;
+			}
+		</style>
+	</head>
+	<body>
+	<div id="box">
+		<div id="header">
+			<div class="logo"><img src="img/logo.png" alt="" /></div>
+			<div class="nav">
+				<div class="border"></div>
+				<ul>
+					<li><a href="">首页</a></li>
+					<li><a href="">常见问题</a></li>
+					<li><a href="">论坛</a></li>
+					<li><a href="">360首页>> </a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="content">
+			<div class="conChild"></div>
+			<div class="conChild"></div>
+			<div class="conChild"></div>
+			<div class="conChild"></div>
+		</div>
+		<div id="slider">
+			<ul>
+				<li class="on">安全换机</li>
+				<li>无网对传</li>
+				<li>隐私粉碎</li>
+				<li>一键转移</li>
+			</ul>
+		</div>
+	</div>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+		<script>
+			(function(){
+				let $head = $("#header"),
+					$nav = $head.find(".nav")
+					$border = $head.find(".nav .border"),
+					$nli = $head.find(".nav ul li"),
+					bW = $border.outerWidth() , nW = $nli.outerWidth(),
+					sW = bW -nW,	//取差值  ，border的宽-li的宽
+					bpW = $border.position().left , npW = $nli.position().left,
+					spW = bpW - npW ;//取定位差值  
+					console.log(bpW,npW,spW)
+				//导航栏目动效
+				$nli.mouseenter(function(){
+					width = $(this).outerWidth() + sW
+					left =  $(this).position().left + spW
+					console.log($(this).position().left)
+					$border.stop().animate({
+						width : width ,
+						left : left
+					});
+					$nav.mouseleave(function(){
+						$border.stop().animate({
+						width : bW ,
+						left : bpW
+						});
+					})
+				})
+			})();
+			
+			
+			//全屏滚动
+			(function(){
+				let $content = $("#content"),
+					$slider = $("#slider"),
+					len = $content.children().length,
+					sli = $slider.find("ul li"),//侧边sidebar
+					index = 0,
+					wheelTime = 0;
+				
+				let height = $content.height();
+					//浏览器窗口发生改变时，重新获取值
+					$(window).resize(function(){
+						height = $(this).height();//重新获取窗口高度
+						$content.css("top",-index*height) //Top
+					})
+					
+					//鼠标滚动事件
+					$(window).mousewheel(function(e,d){
+						if(new Date -wheelTime>500){
+							if(d<0){
+								index ++;
+								index %= len
+							}else{
+								index --;
+								if(index<0) index = len-1;
+							}
+							change();
+						}
+						wheelTime = new Date
+					})
+					
+					//侧边sidebar
+					sli.click(function(){
+						index = $(this).index();
+						change();
+					})
+					
+					//变化函数
+					function change(){
+						sli.eq(index).addClass("on").siblings().removeClass("on")
+						$content.stop().animate({
+							top:-index*height
+						})
+					}
+			})();
+		</script>
+	</body>
+</html>

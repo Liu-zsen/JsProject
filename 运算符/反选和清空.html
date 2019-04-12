@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>反选和清空</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				color: #fff;
+			}
+			.box{
+				width: 400px;
+				height: 250px;
+				margin: 50px auto;
+				
+			}
+			.box ul li{
+				line-height: 30px;
+				padding-left: 30px;
+				background: url(img/ck.png) no-repeat 5px center;;
+				border-bottom: 1px solid #fff;
+			}			
+			.box ul .on{
+				line-height: 30px;
+				padding-left: 30px;
+				background: url(img/cked.jpg) no-repeat 5px center;;
+				border-bottom: 1px solid #fff;
+			}
+			.box ul li:nth-child(odd){
+				background-color: #6f5499 ;
+			}
+			.box ul li:nth-child(even){
+				background-color: #cdbfe3 ;
+			}			
+	
+			.box ul li:hover{
+				background-color: pink;
+			}
+			button {
+				padding: 5px;
+				border: none;
+				background-color: #6F5499;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<ul>
+				<li class="list">kevin</li>
+				<li class="list">米奇</li>
+				<li class="list">蛮王</li>
+				<li class="list">史努比</li>
+				<li class="list">熊本熊</li>
+				<li class="list">小黄人</li>
+				<li class="list">凯西</li>
+				
+			</ul>
+			<button id="btn1">全选</button>
+			<button id="btn2">反选</button>
+			<button id="btn3">清空</button>
+		</div>
+		
+		<script type="text/javascript">
+			
+			var abox = document.getElementById("box"),
+				alist = abox.querySelectorAll(".list"),
+				Abtn = document.getElementById("btn1"),
+				Bbtn = document.getElementById("btn2"),
+				Cbtn = document.getElementById("btn3"),
+				length = alist.length
+				
+				for(var i=0;i<length;i++){
+					lcval = alist[i].className
+					alist[i].index= i
+					alist[i].ifCheck = false
+					alist[i].onclick = function(){
+						this.className = this.ifCheck?"":lcval+" on"
+						this.ifCheck = !this.ifCheck
+					}
+				}
+				
+				Abtn.onclick = function(){
+					
+					for(i=0;i<length;i++){
+						alist[i].className = lcval+" on"
+						alist[i].ifCheck = !false
+					}
+						
+				}
+				
+				Bbtn.onclick = function(){
+					
+					for(i=0;i<length;i++){
+						x = alist[i].ifCheck
+						alist[i].className = !x?lcval+" on":""
+						alist[i].ifCheck = !alist[i].ifCheck 
+					}
+				}
+				
+				Cbtn.onclick = function(){
+					for(i=0;i<length;i++){
+						alist[i].className = ""
+						alist[i].ifCheck = false
+					}
+				}
+		</script>
+	</body>
+</html>

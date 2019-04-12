@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>包装对象</title>
+	</head>
+	<body>
+		
+		<script>
+			//js中只有对象才能调用方法 
+			//(面试题)	: 为什么值类型能够调用方法？
+			//			: 因为有包装对象的存在
+			//			: 那什么是包装对象？
+			
+			let str = 'hello';	//字面量，属于基础值类型数据，
+			let s2 = new String("sss")	//而通过构造函数生成的，会返回obj，属于引用型
+			str.number = 10; //  这种值类型的可以设置，但不能调用是因为 ：用类生成字符串，但只保留"值"
+							//str.number 当'点'操作时，会创建一个临时对象，调用完成后就会消失了
+			alert( str.number ); //这一步 => 又重新创建一个临时对象 
+								//所以访问一个对象不存在的属性是返回 undefined
+		</script>
+	</body>
+</html>

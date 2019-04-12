@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>随机色卡</title>
+		<style>
+			*{
+				margin: 0;
+				padding:0;
+			}
+			
+			#box span{
+				float: left;
+				width: 80px;
+				height: 40px;
+				line-height: 40px;
+				color: #fff;
+				text-align: center;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+			var obox = document.getElementById("box")
+			var x = 0
+			window.a = setInterval(function(){
+				
+				b = Corder()
+				x++
+				obox.innerHTML += "<span style='background:"+b+"'>"+b+"</span>"
+				if(x==80){
+					clearInterval(window.a)
+				}
+			console.log(x)
+			},200)
+			
+			function Corder(){
+				var rand = "#"
+				for(var i=0;i<6;i++){
+					rand += parseInt(Math.random()*16).toString(16)
+				}return rand
+			}
+		</script>
+
+
+	</body>
+</html>

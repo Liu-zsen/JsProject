@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<style type="text/css">
+			*{
+				margin:0;
+			}
+			.on{
+				background: green;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="idc" class='box wrp i'>我是第一个盒子</div>
+		<div class='a'>我是第二个盒子</div>
+		<div class='box on'>我是第三个盒子</div>
+		
+		<script type="text/javascript">
+			//封装addClass函数，通过addClass去给元素添加类名
+			var aDiv = document.getElementById('idc')
+			addClass(aDiv,"wrp on")
+			function addClass(ele,CName){
+				var arr1 =  ele.className.split(" ")		
+					arr2 = CName.split(" ")
+					arr3 = arr1.concat(arr2)		//concat()  拼接数组
+					for(var i=0;i<arr3.length;i++){
+						for(var j=i+1;j<arr3.length;j++){
+							if(arr3[i] == arr3[j]){
+								arr3.splice(j,1)			//从下标 为 j 开始 删除 1位
+								j--
+							}
+						}
+					}
+				console.log(arr3)
+				return ele.className = arr3.join(" ")		//将数组拼接成字符串
+			}
+		</script>
+	</body>
+</html>

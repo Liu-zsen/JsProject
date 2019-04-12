@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>鼠标事件调整盒子大小</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding: 0;
+			}
+			#box{
+				position: absolute;
+				top: 20%;
+				left:20%;
+				width: 100px;
+				height: 100px;
+				background: pink;
+				-moz-user-select: none;
+				-webkit-user-select:none;
+			}
+			#box div{
+				position: absolute;
+				background: #666666;
+				cursor: e-resize;
+			}
+			#box .east{
+				right:0;
+				width: 5px;
+				height: 100%;
+				cursor: e-resize;
+			}
+			#box .south{
+				bottom:0;
+				width: 100%;
+				height: 5px;
+				cursor: n-resize;
+			}
+			#box .west{
+				left:0;
+				width: 5px;
+				height: 100%;
+				cursor: w-resize;
+			}
+			#box .north{
+				top:0;
+				width: 100%;
+				height: 5px;
+				cursor: n-resize;
+			}
+			#box .upLe{
+				top: 0;
+				left: 0;
+				width: 5px;
+				height: 5px;
+				cursor: nw-resize;
+			}
+			#box .upRi{
+				top: 0;
+				right: 0;
+				width: 5px;
+				height: 5px;
+				cursor: ne-resize;
+			}
+			#box .lowLe{
+				bottom: 0;
+				left: 0;
+				width: 5px;
+				height: 5px;
+				cursor: ne-resize;
+			}
+			#box .lowRi{
+				bottom: 0;
+				right: 0;
+				width: 5px;
+				height: 5px;
+				cursor: nw-resize;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div class="east"></div>
+			<div class="south"></div>
+			<div class="west"></div>
+			<div class="north"></div>
+			<div class="upRi"></div>
+			<div class="lowRi"></div>
+			<div class="lowLe"></div>
+			<div class="upLe"></div>
+		</div>
+		
+		<script>
+			var box = document.getElementById('box')
+			var dirt = box.querySelectorAll('div')
+			
+			for(var i=0;i<8;i++){
+				(function(i){
+
+					dirt[i].onmousedown = function(e){
+						e = e || window.event
+						var Ecx = e.clientX ,Ecy = e.clientY;	//获取鼠标点击x，y的初始值
+						var width = box.offsetWidth			//获取盒子初始宽高
+						var height = box.offsetHeight
+						var left = box.offsetLeft
+						var top =box.offsetTop
+						document.onmousemove = function(e){
+								e = e || window.event
+								var Mcx = e.clientX ,Mcy = e.clientY;//获取鼠标移动后的值
+								var ranGx = Mcx - Ecx     ////当前位置-初始位置  = 变化量  x
+								var ranGy = Mcy - Ecy     ////当前位置-初始位置  = 变化量  y
+								var x = width , y = height,
+									le = left ,to =top
+							switch (i){
+								case 0:
+									x = ranGx + x
+									break;
+								case 1:
+									y = ranGy + y
+									break;
+								case 2:
+									x = x -ranGx
+									le += ranGx
+									break;
+								case 3:
+									y -= ranGy 
+									to += ranGy 
+									break;
+								case 4:
+									x = ranGx + x
+									y -= ranGy 
+									to += ranGy 
+									break;
+								case 5:
+									x += ranGx 
+									y += ranGy 
+									break;
+								case 6:
+									y += ranGy 
+									le += ranGx
+									x = x -ranGx
+									break;
+								case 7:
+									y -= ranGy 
+									le += ranGx
+									x -=ranGx
+									to += ranGy 
+									break;
+							}
+							x=Math.max(x,10)
+							y=Math.max(y,10)
+							le=Math.min(le,Ecx+width-10)
+							to=Math.min(to,Ecy+height-10)
+							
+							box.style.width = x + "px" ;
+							box.style.height = y + "px";
+							box.style.left = le + "px" ;
+							box.style.top = to + "px" ;
+						}
+
+					}
+					document.onmouseup = function(){
+						document.onmousemove = null;	
+					}
+				})(i);
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>各种宽高</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				width: 100px;
+				height: 100px;
+				padding: 5px 10px;
+				background: pink;
+				border: 5px solid green;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">啊实打实的骄傲是配件大上坡i撒地方撒地方第三方asdfsdfg梵蒂冈回复该减肥很关键</div>
+		<script type="text/javascript">
+			var obox = document.getElementById('box')
+			
+			var cssJ = obox.currentStyle || getComputedStyle(obox);
+			var width = cssJ.width   //盒子宽
+			/*
+				.offsetParent
+					获取定位父级（object 元素节点）
+					无论自身有没有定位，都可以获取
+				
+				.offsetLeft    /	.offsetTop
+					元素到定位父级的left / top的距离（number 具体的数值）
+					（无论自身有没有定位）
+					只读属性
+			*/
+			
+			//			event.clientX、event.clientY   （窗口）
+			//			返回当事件被触发时鼠标指针向对于浏览器页面（或客户区）的水平坐标。
+			//			客户区指的是当前窗口。
+						
+			/*	 	event.pageX、event.pageY （整个文档）
+					类似于event.clientX、event.clientY，但它们使用的是整个文档坐标，而非窗口坐标。
+					这2个属性不是标准属性，但得到了广泛支持。IE事件中没有这2个属性。		
+			*/
+			px = 
+ 			//获取width+padding的宽高
+			w = obox.clientWidth
+			
+			//获取width + padding + border的宽高
+			Wr = obox.offsetWidth
+			
+			//获取盒子内容的实际占高
+			Ws = obox.scrollHeight
+			console.log(Ws)
+		</script>
+	</body>
+</html>

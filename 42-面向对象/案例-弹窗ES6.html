@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>案例-弹窗ES6</title>
+		<style>
+	    *{margin:0;padding:0;}
+	    #alert{
+	      position: fixed;
+	      width: 100%;
+	      height: 100%;
+	      background: rgba(0,0,0,.3);
+	      transition: .2s;
+	    }
+	    #info{
+	      position: absolute;
+	      left:50%;
+	      top: 10%;
+	      margin-left: -250px;
+	      width: 500px;
+	      height: 200px;
+	      background: #eee;
+	      border-radius: 5px;
+	    }
+	    #info p{
+	      height: 20%;
+	      background: pink;
+	      border-top-left-radius: inherit;
+	      border-top-right-radius: inherit;
+	      color: #fff;
+	      text-indent: 20px;
+	      font-size: 20px;
+	    }
+	    
+	    #info div{
+	      height: 80%;
+	      text-align: center;
+	      font-size: 30px;
+	    }
+	
+	    /* get: 文字居中方式 */
+	    #info p::before, #info div::before{
+	      display: inline-block;
+	      content: "";
+	      height: 100%;
+	      vertical-align: middle;
+	    }
+	  </style>
+	</head>
+	<body>
+		  <div id="alert">
+		    <div id="info">
+		      <p>title</p>
+		      <div>body</div>
+		    </div>
+		  </div>
+	<script type="text/javascript">
+		{
+			//构造函数
+			class Alert{
+				constructor(json){
+					if(typeof json.el !== "string"){
+						throw Error("请把el的参数带上")
+					}
+					this._el = document.getElementById(json.el.slice(1))
+					this._info = document.getElementById("info")
+					this._title = this._info.getElementsByTagName("p")[0] 
+					this._title.innerHTML = json.title || "这是标题"
+					this._content = this._info.getElementsByTagName("div")[0]
+					this._content.innerHTML = json.content || "这是内容"
+					this.autoClose = !!json.autoClose
+					this.Aclose();
+					this._el.onclick = function(e){
+						e.stopPropagation()
+						this.Aclose()
+					}.bind(this)
+					this._info.onclick = e => {
+						e.stopPropagation()
+					}
+				}
+				Aclose(){
+					this._el.style.visibility = "hidden"
+					this._el.style.opacity = "0"
+					return this
+				}
+				open(){
+					this._el.style.visibility = "visible"
+					this._el.style.opacity = "1"	
+					if(this.autoClose){
+						setTimeout(this.Aclose.bind(this),2000)	//定时器的this指向window，所以要改变this的指向
+					}
+					return this
+				}
+				
+			}
+			
+			//子类继承
+			class AlertChild extends Alert{
+				constructor(){
+					super()
+				}
+			}
+			
+			//实例化对象
+			const alert2 = new Alert({
+				el : "#alert",
+				title : "这是标题",
+				content : "这是内容",
+				autoClose : true //自动关闭，默认false
+			})
+			document.onclick = function(){
+				alert2.open()
+			}
+			
+		}
+	</script>
+	</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>地址栏功能</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				font-family: "微软雅黑";
+				font-size: 14px;
+			}
+			.box{
+				width: 500px;
+				margin: 55px auto;
+			}
+			.box li{
+				line-height: 50px;
+				list-style: none;
+				border-bottom: 1px solid blueviolet;
+			}
+			.box  li input{
+				display: none;
+			}
+			.box li button{
+				width: 50px;
+				line-height: 25px;
+				background-color:#000;
+				border: 1px solid;
+				color: #fff;
+			}
+			.box  li span{
+				float: left;
+				margin: auto 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<ul>
+				<li>
+					<span>点击修改</span>
+					<input  id="" value="" placeholder="请填写" />
+					<button>修改</button>
+				</li>
+				<li>
+					<span>点击修改</span>
+					<input  id="" value="" placeholder="请填写" />
+					<button>修改</button>
+				</li>
+				<li>
+					<span>点击修改</span>
+					<input  id="" value="" placeholder="请填写" />
+					<button>修改</button>
+				</li>
+				<li>
+					<span>点击修改</span>
+					<input  id="" value="" placeholder="请填写" />
+					<button>修改</button>
+				</li>
+			</ul>
+		</div>
+		
+		<script type="text/javascript">
+			var abox = document.getElementById("box"),
+				abtn = abox.querySelectorAll("button"),
+				aspan  =abox.querySelectorAll("span"),
+				aipt = abox.querySelectorAll("input"),
+				length = abtn.length
+//			alert(length)
+			for(var i=0;i<length;i++){
+				abtn[i].index = i
+				abtn[i].onclick = function(){
+				 	index = this.index
+				 	//三目
+				 	var bool = this.innerHTML==="修改"
+				 	bool?this.innerHTML = "确认" : this.innerHTML = "修改"
+				 	aspan[index].style.display = bool?"none":"block" 
+				 	aipt[index].style.display  =bool?"inline-block":"none"
+				 	bool?aipt[index].value = aspan[index].innerHTML:aspan[index].innerHTML = aipt[index].value 
+
+
+/*				 if(this.innerHTML==="修改"){
+				 		this.innerHTML = "确认"
+				 		aspan[index].style.display = "none" 
+				 		aipt[index].style.display = "inline-block"
+				 		aipt[index].value =  aspan[index].innerHTML
+				 	}else{
+				 		this.innerHTML = "修改"
+				 		aspan[index].style.display = "block" 
+				 		aipt[index].style.display = "none"
+				 		aspan[index].innerHTML = aipt[index].value  
+				 	}*/
+				}
+			}
+		</script>
+	</body>
+</html>

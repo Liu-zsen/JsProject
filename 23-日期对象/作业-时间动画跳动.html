@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>时间动画跳动</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width: 500px;
+				height: 200px;
+				margin: 50px auto;
+				box-shadow: 0 0 5px 1px #aaa;
+				text-align: center;
+				line-height: 200px;
+			}
+			.box ul{
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.box ul li{
+				float: left;
+				overflow: hidden;
+				width: 40px;
+				height: 60px;
+				list-style: none;
+			}
+			.box .num{
+				position: relative;
+				width: 40px;
+			}
+			.box .num div{
+				position: absolute;
+				width: 40px;
+				height: 120px;
+			}
+			.box .num span{
+				display: block;
+				width: 40px;
+				height: 60px;
+			}
+			.box .dot{
+				background: url(img/d.png) no-repeat 50%;
+			}			
+			.box .num .i0{
+				background: url(img/0.png) no-repeat 50%;
+			}			
+			.box .num .i1{
+				background: url(img/1.png) no-repeat 50%;
+			}			
+			.box .num .i2{
+				background: url(img/2.png) no-repeat 50%;
+			}			
+			.box .num .i3{
+				background: url(img/3.png) no-repeat 50%;
+			}			
+			.box .num .i4{
+				background: url(img/4.png) no-repeat 50%;
+			}			
+			.box .num .i5{
+				background: url(img/5.png) no-repeat 50%;
+			}			
+			.box .num .i6{
+				background: url(img/6.png) no-repeat 50%;
+			}			
+			.box .num .i7{
+				background: url(img/7.png) no-repeat 50%;
+			}			
+			.box .num .i8{
+				background: url(img/8.png) no-repeat 50%;
+			}		
+			.box .num .i9{
+				background: url(img/9.png) no-repeat 50%;
+			}			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul>
+				<li class="num"><div><span class="first i0"></span><span class="second i0"></span></div></li>
+				<li class="num"><div><span class="first i0"></span><span class="second i0"></span></div></li>
+				<li class="dot"></li>
+				<li class="num"><div><span class="first i0"></span><span class="second i0"></span></div></li>
+				<li class="num"><div><span class="first i0"></span><span class="second i0"></span></div></li>
+				<li class="dot"></li>
+				<li class="num"><div><span class="first i0"></span><span class="second i0"></span></div></li>
+				<li class="num"><div><span class="first i0"></span><span class="second i0"></span></div></li>
+			</ul>
+		</div>
+		<script>
+			var aNum = document.querySelectorAll(".box .num div")
+			var aFirst = document.querySelectorAll(".box .num div .first")
+			var aSecond = document.querySelectorAll(".box .num div .second")
+			var len = aNum.length
+			var flag = true
+			var lastTime  = ''
+			
+
+			
+			setInterval(Tjump(),1000);
+			function Tjump(){
+				var ti = new Date()
+				var hh = ti.getHours()
+				var mm = ti.getMinutes()
+				var ss = ti.getSeconds()
+				hh = reset(hh)
+				mm = reset(mm)
+				ss = reset(ss)
+				var str = ""+hh+mm+ss
+				
+					if(flag){
+						
+						for(var i=0;i<len;i++){
+						aNum[i].i = i	
+						aFirst[i].className = "first i"+str.charAt(i)
+						}
+						flag = false
+					}else{
+						for(i=0;i<len;i++){
+							aSecond[i].className = "second i"+str.charAt(i)
+						}
+						for(i=0;i<len;i++){
+							if(lastTime[i] !== str[i]){			//将不相等下标 向上移动
+								move(aNum[i],'top',-60,6,function(){ 	//传参
+									this.style.top = "0px";
+									aFirst[this.i].className = "first i"+str.charAt(this.i)
+								});
+							}
+						}
+					}
+				lastTime = str							//将第一次的执行时间存起来	
+				return Tjump
+			}
+			function reset(n){
+				if(n<10){n = "0"+ n}
+				return n
+			}
+			
+			
+			
+			//运动框架
+			function move(obj,arr,end,speen,callback){
+	        window.requestAnimationFrame = window.requestAnimationFrame || function (fn) {return setTimeout(fn , 1000/60)};//设置
+	        window.cancelAnimationFrame = window.cancelAnimationFrame || clearTimeout;	//清除
+				var cssStyle = obj.currentStyle || getComputedStyle(obj)	//获取#box在页面上默认的所有属性
+				var state = parseFloat(cssStyle[arr])			//获取目标的属性如：宽度
+				var flag = state > end
+				//封装一个运动框架
+				if(flag){
+					speen = -speen;
+				}
+				(function fn(){
+					state += speen
+					if(flag?state<=end:state>=end){
+						state = end
+					}else{
+						requestAnimationFrame(fn)
+						}
+					obj.style[arr] = state + "px"
+					if(state === end){			//动画执行完，回调
+						callback && callback.call(obj);
+					}
+				})();
+
+			}
+
+
+	
+		</script>
+	</body>
+</html>

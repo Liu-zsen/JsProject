@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>解绑事件的方式</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box {
+				width:100px;
+				height:120px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script type="text/javascript">
+			var obox = document.getElementById("box")
+			
+			
+			moveEvent(obox,"click",goto)	
+			moveEvent(obox,"click",To)	
+			
+			function goto(){
+				alert("asdasdasd")
+			}
+			function To(){
+				alert("asdas123135")
+			}
+			
+			function moveEvent(obj,eName,Fn,bool){
+				
+				if(document.addEventListener){
+					obj.removeEventListener(eName,Fn,!!bool)		//IE9+、主流浏览器
+				}else{
+					obj.detachEvent("on"+eName,Fn)		//IE  
+				}
+			}
+		</script>
+	</body>
+</html>

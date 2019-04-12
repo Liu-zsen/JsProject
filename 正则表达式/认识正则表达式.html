@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>正则表达式</title>
+	</head>
+	<body>
+		<script>
+			/*
+			 * 正则表达式：
+			 * 		规则
+			 * 		用来匹配某一段字符串满不满足某一个规则的对象	
+			 * 
+			 */
+			let str = "189dou7759em958";
+			
+			let s = str.match(/\d+/g)
+			console.log(s)
+		</script>
+		<script>
+//			//例子：找到数字集合（之前的方法）
+//			let str = "125dou589em958";
+//			let arr = []
+//			let s = ""	
+//			for (let i=0;i<str.length;i++) {
+//				if(!isNaN( str.charAt(i) )){			//isNaN  ：只要检测到数字就返回false 
+//									
+//					s = s + str.charAt(i)				//只要是数字就将存在s里面
+//				}else if(s){
+//					arr.push(s)	;			//遇到非数字，将前面的数字集合push到数组里面
+//					s = "";					//并将s 清空
+//				}
+//			}
+//			if(s){
+//					arr.push(s)	;			//遇到非数字，将前面的数字集合push到数组里面
+//				}
+//					console.log(arr)			
+		</script>
+	</body>
+</html>

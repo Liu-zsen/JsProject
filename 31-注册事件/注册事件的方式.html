@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册事件的方式</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box {
+				width:100px;
+				height:120px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script type="text/javascript">
+			
+			/**
+			 * addEventlistener(string,function,bool)
+			 * string =>事件名
+			 * function =>事件函数
+			 * bool => 默认false (可却省)
+			 * **/
+			var obox = document.getElementById("box")
+			
+			
+			addEvent(obox,"click",go)	
+			
+			addEvent(obox,"click",to)
+			function go(){
+				alert("asda56")
+			}	
+			function to(){
+				alert("12356")
+			}
+			function addEvent(obj,eName,Fn,bool){
+				
+				if(document.addEventListener){
+					obj.addEventListener(eName,Fn,bool)		//IE9+、主流浏览器
+				}else{
+					obj.attachEvent("on"+eName,Fn)		//IE  
+				}
+			}
+		</script>
+	</body>
+</html>

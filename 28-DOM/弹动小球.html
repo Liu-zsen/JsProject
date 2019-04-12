@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弹弹弹球！</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: absolute;
+				width: 80px;
+				height: 80px;
+				background: #ccc;
+				border-radius:50% ;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script type="text/javascript">
+			var aball =  document.getElementById('box')
+			
+			//先写兼容
+			window.requestAnimationFrame = window.requestAnimationFrame || function(a){return setTimeout(a,1000/60)};
+			window.cancelAnimationFrame = window.cancelAnimationFrame || clearTimeout;
+			
+			//获取盒子自身的宽高
+			var width = aball.offsetWidth
+			var height = aball.offsetHeight
+			
+			var Vx = 7, Vy = 4,maxW,maxH;
+			resize();		//先执行一次
+			window.onresize = resize;	//在浏览器窗口改变大小时触发
+			function resize(){
+				maxW = document.documentElement.clientWidth - width;
+				maxH = document.documentElement.clientHeight - height;
+			}
+			(function move(){
+				var left =  aball.offsetLeft + Vx
+				var top = aball.offsetTop + Vy
+				
+				if(maxW<=left){
+					left = maxW
+					Vx = -Vx
+				}
+				if(left <= 0){
+					left = 0;
+					Vx = -Vx
+				}
+				if(maxH<=top){
+					top = maxH
+					Vy = -Vy
+				}
+				if(top<=0){
+					top = 0;
+					Vy = -Vy
+				}
+				aball.style.left = left +"px"
+				aball.style.top = top + "px"
+				requestAnimationFrame(move)
+				
+			})();
+		</script>
+	</body>
+</html>

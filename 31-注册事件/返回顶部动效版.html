@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>动效版返回顶部</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.goblock{
+				position: fixed;
+				right: 20px;
+				bottom: 10%;
+				width: 30px;
+				height:35px;
+				padding:10px ;
+				background: #f5da55;
+				font-size: 14px;
+				text-align: center;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body style="height: 2500px;">
+	<div class="goblock">
+		<a>返回顶部</a>
+	</div>
+	<script>
+		for(let i=0;i<200;i++){
+			document.body.innerHTML += ""+ i + i + "<br>" 
+		}
+		
+		let goBlock = document.querySelector('.goblock')
+		let sW = document.documentElement.scrollWidth || document.body.scrollWidth
+		
+		
+		goBlock.onclick = function(){
+			window.a = setInterval(function(){
+			//获取浏览器滚动的高度
+			let sT = document.documentElement.scrollTop || document.body.scrollTop
+					speed = sT / 6;
+					if(document.documentElement.scrollTop !=0 ){
+						document.documentElement.scrollTop = speed 
+					}else{
+						document.body.scrollTop = speed 
+					}
+					if(speed == 0){
+						clearInterval(window.a)
+					}
+					
+				},1000/60)
+		}
+
+	</script>
+	</body>
+</html>

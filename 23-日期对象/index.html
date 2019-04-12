@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>倒计时</title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			.box{
+				width: 500px;
+				height: 200px;
+				line-height: 200px;
+				margin: 50px auto;
+				box-shadow: 0 0 5px 1px #aaa;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+			<div class="box"></div>		
+			<script>
+				var  obox = document.getElementsByClassName("box")[0]
+				var  News = new Date(2018,9)  		//月份的下标从0开始
+				window.a = setInterval(function(){
+					var time  = new Date();
+//					var day = time.getDate()
+//					var h = time.getHours()
+//					var m = time.getMinutes()
+//					var s = time.getSeconds()
+					var count = News - time
+					var Day = Math.floor(count/(1000*60*60*24))		//天
+					var hh = Math.floor(count/(1000*60*60))%24			//时
+					var mm = Math.floor(count/(1000*60))%60			//分钟
+					var ss = Math.floor(count/(1000))%60				//秒
+					
+					mm = reset(mm)
+					ss = reset(ss)
+					
+					console.log(mm)
+					obox.innerHTML = "距离国庆节还有："+Day+"天"+hh+"小时"+mm+"分"+ss+"秒"
+					
+					
+				},1000)
+				
+				function reset(n){
+					if(n<10){
+						n = "0"+n
+					}
+					return n
+				}
+			</script>
+	</body>
+</html>

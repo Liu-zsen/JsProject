@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>阻止冒泡</title>
+		<style>
+			*{
+				margin:0;
+				padding: 0;
+			}
+			#box{
+				width:150px;
+				margin: 20px auto;
+				box-shadow: 0 0 2px 1px #aaa;
+				color: #666;
+				overflow: hidden;
+			}			
+			#box h4{
+				width: 100%;
+				background-color:#eee;
+				text-align: center;
+			}
+			ul{
+				display: none;	
+				width:100%;
+				background: #eee;
+				list-style: none;
+			}
+			ul li{
+				width:100%;
+				background: #ccc;
+				margin:1px 0;
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<h4>姓名</h4>
+			<ul>
+				<li>夏日</li>
+				<li>夏月</li>
+				<li>夏明</li>
+				<li>夏面</li>
+			</ul>
+		</div>
+
+		<script type="text/javascript">		
+		/***阻止冒泡：
+		 * 	e.cancelBubble = ture //  阻止冒泡 ，默认值为false 
+		 ***/
+			var obox = document.getElementById('box')
+			var hF = obox.children[0],Ul = obox.children[1]
+			hF.onclick = function(e){
+				e = e || window.event
+				e.cancelBubble = true
+				if(e.target.nodeName === "H4"){
+					Ul.style.display = "block"
+				}
+			}
+			document.onclick = function(e){
+				e = e || window.event
+				if(e.target.nodeName === "LI"){
+					console.log(e.target.nodeName)
+					return
+				}else{
+					Ul.style.display = "none"
+					
+				console.log(e.target.nodeName)
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>charCodeAt</title>
+	</head>
+	<body>
+		<input type="text" id="txt" />
+		<input type="button" id="btn" value="确定">
+		<script>
+			
+			btn.onclick = function(){
+				var b = txt.value
+				if(str(b)){
+					alert("牛逼	输入正确")
+				}else{
+					alert("您输入有误")
+				}
+				console.log(b)
+			}
+			
+			function str(x){
+				var  index = x.charCodeAt()
+				if(index<48 || index>57 || x==""){
+					return false;
+				}
+				return true;
+			}
+			
+		</script>
+		
+		<!--<script type="text/javascript">
+			//  for循环遍历方法
+			btn.onclick = function(){
+					var b = txt.value
+					if(str(b)){
+						alert("牛逼！输入正确")
+					}else{
+						alert("您输入有误")
+					}
+					console.log(b)
+				}
+				
+				function str(x){
+					var  index = "";
+					for(var i=0;i<x.length;i++){
+						index = x.charCodeAt(i)
+						if(index<48 || index>57 || null){
+							return false;
+						}else{
+							return true;
+						}
+					}
+					
+				}
+		</script>-->
+	</body>
+</html>

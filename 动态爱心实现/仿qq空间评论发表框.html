@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>仿qq空间评论发表</title>
+		<style>
+			*{
+				margin: 0;
+				padding:0;
+			}
+			body{
+				font-family:"微软雅黑";
+				font-size: 14px;
+			}
+			ol,ul,li{list-style:none}
+			.box{
+				background: #ccc;
+				width:350px;
+				height:130px;
+				border-radius:5px ;
+				margin: 50px auto 20px;
+				padding: 10px;
+			}
+			.contant{
+				
+			}
+			textarea {
+				width: 100%;
+				height: 80px;
+				text-indent: 0.5em;
+				border-radius: 5px;
+				border: 1px solid transparent;
+				resize: none;
+			}
+			.demo{line-height: 45px;padding-top: 5px;}
+			.demo img,.demo button{
+				vertical-align: middle;
+				display: inline-block;
+			}
+
+			.demo p{
+				position:relative;
+				float: left;
+				display: inline-block;
+			}
+			.demo img{
+				position:absolute;
+				top: 0;
+				left: 0;
+				display: none;
+				
+			}
+			.demo .button{
+				vertical-align: middle;
+				float:right;
+			}
+			.demo button{
+				padding : 4px 8px;
+				border-radius: 5px;
+				border: 1px solid transparent;
+			}
+			.contant .demoli{
+				width: 350px;
+				margin: auto;
+			}
+			.contant .demoli li{
+				border-bottom:1px solid #ccc;
+				padding: 5px;
+		
+			}
+			.contant .demoli li::after{
+				content: "";
+				display: block;
+				clear: both;
+			}
+			.contant .demoli li img{
+				padding-right: 5px;
+			}		
+			.contant .demoli li p{
+				display: inline-block;
+				vertical-align: top;
+				float: right;
+				width: 280px;
+				word-break: break-all;/*实现文本换行*/
+			}
+		</style>
+	</head>
+	<body>
+		<div class="contant">
+			<div class="box">
+				<textarea id="text" name="" rows="" cols="" value=""></textarea>
+				<div class="demo"> 
+					<p id="box1">
+						<img style="display: block;" src="img/1.png">	
+						<img src="img/2.png">	
+					</p>
+					<div class="button">
+						<button id="btn" type="button">发表</button>
+					</div>
+				</div>
+				
+			</div>
+			<div class="demoli">
+					<ul> 
+						<li><img src="img/1.png"><p>sadsa</p></li>
+						<li><img src="img/1.png"><p></p></li>
+						<li><img src="img/1.png"><p></p></li>
+					</ul>
+				</div>
+		</div>
+		<script>
+		  var oImg = document.querySelectorAll('#box1 img');
+		  var oDli = document.querySelector(".demoli ul");
+		  var oBtn = document.getElementById("btn");
+		  var oText = document.getElementById("text");
+		  var src = oImg[0].src;
+		  
+		  oBtn.onclick = function(){
+		  		var val = oText.value
+				if( val!==""){
+		  		oText.value = ""
+		  		oDli.innerHTML += '<li><img src=' +src+ '><p>'+val+'</p></li>'
+				}else {
+					alert('请输入文字')
+					}
+
+		  }		  
+		  oImg[0].onclick = function(){
+		  	oImg[0].style.display = "none"
+		  	oImg[1].style.display = "block"
+		  	src = oImg[1].src
+		  }
+		  oImg[1].onclick = function(){
+		  	oImg[1].style.display = "none"
+		  	oImg[0].style.display = "block"
+		  	src = oImg[0].src
+		  }
+		  
+
+		
+		</script>
+	</body>
+</html>

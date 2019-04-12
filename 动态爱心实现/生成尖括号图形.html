@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>生成尖括号图形</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			margin: 50px auto;
+			border: 1px dashed #aaa;
+		}
+		.od{
+			width:50px;
+			height:50px;
+			line-height: 50px;
+			background: #abcdef;
+			text-align: center;
+		}
+	</style>
+	<body>
+		<div id="box"></div>
+		<script>
+			let oBox = document.getElementById('box')
+			let num =5;
+			let oDiv = "",x="",index=0;
+			if(num%2){
+				 index = (num+1)/2*50 
+			}else{
+				index = (num+2)/2*50 
+			}
+			oBox.style.width = index +"px"
+			oBox.style.height = (num+1)*50 + 'px'
+			for (let i=0;i<=num;i++) {	
+				x = i<num/2?50*i:50*(num-i)
+				oDiv += `<div class='od' style=margin-left:${x}px>${i}</div>`
+			}
+			oBox.innerHTML = oDiv		
+		</script>
+	</body>
+</html>

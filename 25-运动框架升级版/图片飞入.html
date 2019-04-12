@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片切片飞入</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: relative;
+				width: 590px;
+				height: 470px;
+				margin: 50px auto;
+				box-shadow: 0px 0px 1px 1px #aaa;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script src="js/Tween.js"></script>
+		<script type="text/javascript">
+			let oBox = document.getElementById("box")
+			let oDiv = oBox.getElementsByTagName("div")
+			let {floor:f,random:r} = Math;	//解构赋值
+			let w = oBox.clientWidth , h = oBox.clientHeight;
+			let len = 25
+			let arr = []
+			
+			for (let i = 0; i < len; i++) {
+			  	arr.push(i)
+			}
+			
+			arr.sort((a,b) => r() - 0.5 );//随机打乱
+/*
+ 00 01 02 03 04
+ 05 06 07 08 09
+ 10 11 12 13 14
+ 15 16 17 18 19
+ 20 21 22 23 24
+ * */
+			
+			let i = 0
+			run()
+			function run(){
+				
+				let val = arr[i];
+				if(i>=len) return;
+				let Top = f(val/5) * (h/5)
+			  	let left = val % 5 * (w/5)
+			  	oBox.innerHTML += "<div></div>"
+			  	oDiv[i].style.cssText = `position:absolute;width:${(w/5)}px;height:${(h/5)}px;background:url('img/5.jpg') -${left}px  -${Top}px`;
+			  
+			  	tMove(oDiv[i],{
+			  		top : Top,
+			  		left : left
+			  	},200,function(){		//回调函数
+			  		i++
+			  		requestAnimationFrame(run)
+			  	})
+			}
+		</script>
+	</body>
+</html>

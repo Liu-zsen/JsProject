@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>增删节点</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{width: 100%;height: 100%;}
+			body{
+				position: absolute;
+				background: linear-gradient(rgb(139,193,222),rgb(249,163,134));
+			}
+			.box{
+				position: relative;
+				width: 1000px;
+				height: 550px;
+				margin: 100px auto 0;
+			}
+			.box .left{
+				position: absolute;
+				top:0;
+				left:0;
+				width: 500px;
+				height: 100%;
+				background: #fff;
+			}
+			.box .left p{
+				margin: 100px 0 0 50px ;
+				color: #f60;
+				font-size: 16px;
+			}
+			.box .left p span{
+				margin-left: 5px;
+				color: #666;
+				font-size: 14px;
+				user-select: none;
+				-moz-user-select: none;
+			}
+			.box .left p span:hover {
+				cursor: pointer;
+				color: red;
+			}		
+			.box .left ul{
+				margin-left: 50px;
+				margin-top: 20px;
+				font-size: 14px;
+			}			
+			.box .left ul li{
+				float: left;
+				list-style: none;
+				height: 18px;
+				line-height: 18px;
+				margin: 5px 2px;
+				padding: 5px 6px;
+				border: 1px solid #aaa;
+				font-style: italic;
+			}
+			.box .left ul li .close{
+				padding: 1px 3px;
+				cursor: pointer;
+			}			
+			.box .right{
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 500px;
+				height: 100%;
+				background: rgb(0,0,0,.78);
+			}	
+			.box .right ul{
+				margin: 100px 0 0 50px ;
+				font-size: 14px;
+			}					
+			.box .right ul li{
+				float: left;
+				list-style: none;
+				height: 18px;
+				line-height: 18px;
+				margin:  3px;
+				padding: 5px 6px;
+				border: 1px solid #fff;
+				color: #fff;
+				font-style: italic;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<div class="left">
+				<p>热门目的地：<span>马来西亚</span><span>泰国</span><span>三亚</span><span>新西兰</span><span>云南</span></p>
+				<ul></ul>
+			</div>
+			<div class="right">
+				<ul>
+					<!--<li><span>马来西亚 </span></li>
+					<li><span>泰国</span></li>-->
+				</ul>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			var box = document.getElementById('box')
+			var aspan = box.querySelectorAll(".left span")
+			var leftU = box.querySelector(".left ul")
+			var rigU = box.querySelector('.right ul')
+			for(var i=0;i<aspan.length;i++){
+				aspan[i].a = false
+				aspan[i].onclick = function(){
+					var This = this
+					if(!this.a){
+						 var eli = document.createElement('li')
+						 var Rli = document.createElement('li')
+						 var Cos = document.createElement('span')
+						 eli.innerHTML = "<span>"+this.innerHTML+" | </span>"
+						 Rli.innerHTML = "<span>"+this.innerHTML+"</span>"
+						 Cos.className = 'close'
+						 Cos.innerHTML = 'x'
+						 eli.appendChild(Cos)
+						 leftU.appendChild(eli)		
+						 rigU.appendChild(Rli)
+						 this.a = true		//取反
+						 
+						 Cos.onclick =function(){			
+						 	Cos.parentNode.parentNode.removeChild(eli)	//产生闭包，直接删除
+						 	rigU.removeChild(Rli)
+						 	This.a = false		//取反
+						 }
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

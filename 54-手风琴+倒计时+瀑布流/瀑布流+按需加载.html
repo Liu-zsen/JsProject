@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>瀑布流+按需加载</title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			ul li{
+				list-style: none;
+			}
+			a{text-decoration: none;}
+			.clearfix:after{
+				content:"";
+				display: block;
+				clear: both;
+			}
+			#box{
+				position: relative;
+				width: 835px;
+				margin: 50px auto;
+				overflow: hidden;
+			}
+			#box ul {
+				width: 105%;
+				height: 100%;
+			}
+			#box ul li{
+				float: left;
+				width:265px;
+				margin:0 18px 8px 0;
+			}
+			#box ul li .content{
+				width: 100%;
+				border: 1px solid #e0e0e0;
+				margin-bottom: 10px;
+			}
+			#box ul li .content img{
+				width: 100%;
+			}
+			#box ul li .content .descript{
+				display: block;
+				margin: auto;
+				padding: 5px;
+				font-size: 14px;
+				text-align: justify;
+				color: #333;
+			}
+			#box ul li .content .info{
+				position: relative;
+				width: 100%;
+				height: 40px;
+			}
+			#box ul li .content a:hover{
+				color:#b70032;
+			}
+			#box ul li .content .info p{
+				height: 39px;
+				line-height: 39px;
+				background:#f1f1f1;
+				color:#333;
+				text-indent: 5px;
+				font-size: 14px;
+			}
+			#box ul li .content .info .time{
+				float: left;
+				width: 180px;
+				border-top: 1px solid #e0e0e0;
+				border-right: 1px solid #e0e0e0;
+			}
+			
+			#box ul li .content .info .more{
+				float: left;
+				width: 84px;
+				text-align: center;
+				border-top: 1px solid #e0e0e0;
+			}
+			#fixed{
+				position: fixed;
+				right: 20px;
+				bottom:10%;
+				width: 50px;
+				height: 50px;
+				background: #ddd;
+				cursor: pointer;
+			}
+			#fixed:after{
+				content: "";
+				position: absolute;
+				top: 20px;
+				left: 50%;
+				width: 15px;
+				height: 15px;
+				margin-left: -10px;
+				border: 3px solid;
+				border-color: #fff #fff transparent transparent;
+				transform: rotate(-45deg);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<ul class="clearfix">
+				<li>
+				<!--	<div class="content">
+						<img src="img/01.jpg" alt="" />
+						<a class="descript" href="">你们男神都爱的倪妮 就是个大写哒美好</a>
+						<div class="info">
+							<p class="time">2016/03/18 20:08</p>
+							<p class="more"><a href="">阅读全文</a></p>
+						</div>
+					</div>	-->
+				</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<div id="fixed"></div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="js/data.js"></script>
+		<script>
+			(function(){
+				let $oBox = $("#box")
+				let $ali = $oBox.find("ul li")
+				let index = -1;
+				let len = imgData.length-1;
+				let $fix = $("#fixed")
+				
+				onLoad(10)
+				$(window).scroll(function(){
+					let x = $(document).scrollTop() + $(window).height()
+					if(x>$oBox.height()){
+						onLoad(10)
+					}
+				
+					if($(document).scrollTop()> $(window).height()){
+						$fix.fadeIn()
+					}else{
+						$fix.fadeOut()
+					}
+				})
+				
+				function onLoad(num){
+					let length = num+index;
+					length = Math.min(len,length)
+					add();
+					function add(){
+							
+						if(index <length){
+							index++
+						}else{
+							return;
+						}
+						let data = imgData[index]
+						let aImg = new Image();
+						aImg.src = data.src 
+						aImg.onload = function(){
+							let $div = $(`<div class="content">
+								<img src=${data.src} alt="" />
+								<a class="descript" href="">${data.dec}</a>
+								<div class="info">
+									<p class="time">${data.time}</p>
+									<p class="more"><a href="">阅读全文</a></p>
+								</div>
+							</div>`);
+							$div.css("display","none");
+							minHeight().append($div)
+							$div.fadeIn()
+							add();
+						}
+
+					}
+				}
+				
+				//返顶函数
+				$fix.hide()
+				$fix.click(function(){
+					goBack();
+				})
+				function goBack(){
+					$("html,body").stop().animate({
+						scrollTop: 0
+					})
+				}
+				
+				//查找单列（li）的最小高
+				function minHeight(){
+					let h;
+					let minH = 9999;
+					$ali.each(function(i){
+						let height = $(this).height();
+						if(height<minH){
+							minH = height
+							h = this;
+						}
+					})
+					return $(h)
+				}
+			})();
+		</script>
+<!--		
+		<script type="text/javascript">
+			(function(){
+				let $box = $("#box")
+				let $ali =  $box.find("ul li")
+				let maxLen = imgData.length-1;
+				let index = -1;
+				
+				
+				//按需加载
+				$(window).scroll(function(){
+					if(index >= maxLen)return;
+					let x = $(window).height() + $(document).scrollTop()
+					if($box.height() <= x){
+						onLoad(10)
+					}
+				})
+				onLoad(10);
+				function onLoad(num){
+					let length = num + index;
+						length = Math.min(maxLen,length)
+					add();
+					function add(){
+						if(index<length){
+							index++
+						}else{
+							return
+						}
+						console.log(index)
+						let data = imgData[index]
+						let $Img = new Image();
+							$Img.src = data.src;
+						$Img.onload = function(){
+							let $oCont = $(`<div class="content">
+							<img src=${data.src} alt="" />
+							<a class="descript" href="">${data.dec}</a>
+							<div class="info">
+								<p class="time">${data.time}</p>
+								<p class="more"><a href="">阅读全文</a></p>
+							</div>
+							</div>`);
+							$oCont.css("display","none")
+							Sheight().append($oCont)
+							$oCont.fadeIn()
+							add();
+						}
+						
+					}
+				}
+				
+				//检测最小高
+				function Sheight(){
+					let obj ;
+					let xh = 9999;
+					$ali.each(function(i){
+						let x = $(this).height()
+						if(x < xh){
+							xh = x
+							obj = this
+						}
+					})
+					return $(obj)
+				}
+			})();
+		</script>
+	-->	
+	</body>
+</html>

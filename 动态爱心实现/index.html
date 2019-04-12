@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>js</title>
+		<style>
+			#box1{
+				width:100px;
+				height: 50px;
+				background: pink;
+				border-radius: 5px;
+			}
+			#box2{
+				width:100px;
+				height: 50px;
+				background:pink;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box1"></div><br>
+		<div id="box2"></div>
+		<script>
+		var x =	document.getElementById("box1"),
+			y = document.getElementById("box2");
+			x.onmouseenter = function(){
+				this.innerHTML="我被移入了";
+				this.style.color = "#fff";
+				y.innerHTML = "鼠标移入 #box1 了";
+				y.style.color = null;
+			}
+
+			y.onmouseenter = function(){
+				this.innerHTML="我被移入了";
+				this.style.color = "#fff";
+				x.innerHTML = "鼠标移入#box2了";
+				x.style.color = null;
+			}
+
+			x.onclick = function(){
+				this.innerHTML = "我被点击了！";
+				y.innerHTML =  "";
+			}
+			y.ondblclick = function(){
+				this.innerHTML = "我被双击了";
+				x.innerHTML = "";
+			}
+		</script>
+	</body>
+</html>

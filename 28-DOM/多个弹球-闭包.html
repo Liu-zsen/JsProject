@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弹弹弹！弹走鱼尾纹</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				background: hotpink;
+				border-radius: 50%;
+			}
+			.box{
+				position: absolute;
+				width: 80px;
+				height: 80px;
+				background: #ccc;
+				border-radius:50% ;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<script>
+			var ball;
+			window.requestAnimationFrame = window.requestAnimationFrame || function(a){return setTimeout(a,1000/60)};
+			window.cancelAnimationframe = window.cancelAnimationFrame || clearTimeout;
+			//获取浏览器宽高
+			var maxW ;var  maxH;
+			window.onresize = reset();//在浏览器窗口改变大小时触发
+			function reset(){
+				maxW = document.documentElement.clientWidth -80;
+				maxH = document.documentElement.clientHeight - 80;
+				return reset
+			}
+			for(var i=0;i<15;i++){
+				var ball = document.createElement('div')		//生成10个盒子
+				ball.className = "box"
+				ball.style.backgroundColor = ranCor() ;
+				document.body.appendChild(ball)	;	//追加到body下面
+
+				(function(ball){
+						var w =  2*i+2;
+						var h =  2*i+3;
+						!function move(){
+					
+						var left = ball.offsetLeft +w
+						var top = ball.offsetTop +h
+						if(maxW <= left){
+							left = maxW
+							w = -w
+							ball.style.backgroundColor = ranCor() ;
+						}
+						if(left <= 0){
+							left = 0;
+							w = -w
+							ball.style.backgroundColor = ranCor() ;
+						}
+						if(maxH <= top){
+							top = maxH
+							h = -h
+							ball.style.backgroundColor = ranCor() ;
+						}
+						if(top<=0){
+							top = 0;
+							h = -h
+							ball.style.backgroundColor = ranCor() ;
+						}			
+						ball.style.left = left + "px"
+						ball.style.top  = top + "px"
+						requestAnimationFrame(move)
+					}();	
+						
+				})(ball);
+			}
+
+				
+				
+			//随机生成颜色
+			function ranCor(){
+				var str = "#" //
+				for(var i=0;i<6;i++){
+					str += Math.floor(Math.random()*16).toString(16)
+				}
+				return str
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>40-js</title>
+    <style>
+        *{margin:0;padding:0;}
+        body{
+            background: #eef3fa;
+        }
+        #box{
+            position: relative;
+            width: 800px;
+            height: auto;
+            margin: 50px auto;
+        }
+        #box ul{
+            list-style: none;
+            width: 105%;
+            overflow: hidden;
+        }
+        #box ul li{
+            float: left;
+            width: 250px;
+            margin: 0 10px 10px 0;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+        }
+        #box ul li img{
+            width: 100%;
+        }
+        #box button{
+            position: fixed;
+            top:50%;
+            margin-top: -10px;
+        }
+        #box button.left{
+            left: 50%;
+            margin-left: -500px;
+        }
+        #box button.right{
+            right: 50%;
+            margin-right: -500px;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<div id="box">
+    <ul id="list"></ul>
+    <button class="left" type="button">上一页</button>
+    <button	class="right" type="button">下一页</button>
+</div>
+<script>
+
+    (function(){
+        let $oBox = $("#box")
+        let list = document.getElementById("list")
+        let nextBtn = [...document.getElementsByTagName("button")]
+        let url = "https://route.showapi.com/341-2?"
+        let index = 1
+
+        //上下页跳转
+        nextBtn.forEach( (v,i) => {
+            nextBtn[i].onclick = () => {
+                if(i===1){
+                    index ++
+                    index %= 10
+                }else{
+                    index -- ;
+                    index = Math.max(0,index)
+                }
+                if(index===0)return;
+                change(index)
+            }
+        })
+        change(1)
+        function change(index){
+
+            //jquery
+            $.ajax({
+                url: 'http://route.showapi.com/341-2',
+                type: 'GET',
+                dataType : 'json',
+                data : {
+                    "showapi_appid" : "77574",
+                    "showapi_timestamp" : Date.now(),
+                    "showapi_sign" : "154d10b07f1a405aafa66c6346f0684b",
+                    "maxResult" : "20" ,
+                    "page" : index
+                },
+                success(msg){
+                    // console.log(msg)
+                    show(msg.showapi_res_body)
+                }
+            })
+
+/*		  //原生Ajax
+            let data = {
+                      showapi_appid : "77574",
+                      showapi_timestamp : Date.now(),
+                      showapi_sign : "154d10b07f1a405aafa66c6346f0684b",
+                      maxResult : 20 ,
+                      page : index
+                 }
+                 for(let key in data){
+                      url += `&${key}=${data[key]}`
+                 }
+                 let xhr = new XMLHttpRequest()
+                 xhr.open("GET",url)
+                 xhr.send()
+                 xhr.onreadystatechange = function(){
+                      if(this.readyState !== 4) return
+                      if(this.status >= 200 && this.status<300 || this.status == 304){
+                           console.log(JSON.parse(this.responseText))
+                           show(JSON.parse(this.responseText).showapi_res_body)
+                      }
+              }
+           //原生Ajax --- end	*/
+
+            function show({contentlist:msg}){		//解构赋值传参
+                let str = "";
+                msg.forEach( (v,i) => {
+                    str += `<li><img src=${v.img}><p>${v.title}</p></li>`;
+                })
+
+                list.innerHTML = str;
+                waterFall()
+            }
+
+        }
+
+        //瀑布流函数
+        function waterFall(){
+            let $ali = $("#list > li");			//获取list后代
+            let w = $ali.eq(0).outerWidth(true);	//单个盒子列宽
+            let colus = Math.ceil($oBox.width()/w)  //oBox盒子内的总列数
+//				$oBox.width(w*colus).css("margin","0 auto")
+            let timer;
+            let hArr = [];		//定义空数组存储
+            $ali.css("display","none");
+
+            $ali.each( (i,v) =>{	//jq中的each方法 第一个参数是下标
+
+                timer = setInterval(function(){                   //利用定时器解决图片不能预加载的问题
+                    let h = $ali.eq(i).outerHeight(true);		//获取盒子高
+                    if(i<colus){
+                        hArr[i] = h;
+                        $(v).css({
+                            position : "absolute",
+                            left : i*w
+                        })
+                    }else{
+                        let minH = Math.min(...hArr);		//拆分数字再比较
+                        let minIdx = $.inArray(minH,hArr);	//$.inArray方法，找出数组中某个值的下标
+                        $(v).css({
+                            position : "absolute",
+                            top : minH,
+                            left : minIdx*w
+                        });
+                        hArr[minIdx] += $ali.eq(i).outerHeight(true)
+                    }
+                },1000);
+                window.onload = function(){
+                    clearInterval(timer)
+                }
+
+            })
+
+            $ali.fadeIn()
+        }
+
+    })();
+
+</script>
+</body>
+</html>

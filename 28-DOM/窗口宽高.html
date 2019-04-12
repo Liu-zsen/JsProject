@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>窗口的宽高</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+	<body style="height:1500px">
+		<script type="text/javascript">
+			/**
+			 获取可视窗口的宽高
+			document.documentElement.clientWidth || document.body.clientWidth
+			document.documentElement.clientHeight || document.body.clientheight
+			 * */
+
+			
+			/*
+			 * 获取分辨率的宽高
+			 * window.screen.width
+			 * window.screen.height
+			 * 
+			 * 去除任务栏时候的分辨率
+			 * window.screen.availWidth
+			 * window.screen.availHeight
+			 */
+			
+			/*
+			 *获取浏览器滚动的高度
+			 * document.documentElement.scrollTop || document.body.scrollTop
+			 * 
+			 * 获取浏览器横向滚动的长度
+			 * document.documentElement.scrollLeft || document.body.scrollLeft
+			 * */
+			document.onclick = function(){
+//				alert(document.documentElement.clientWidth)
+//				alert(document.documentElement.clientHeight)
+				alert(document.documentElement.scrollTop)
+			}
+			console.log(document)
+		</script>
+	</body>
+</html>

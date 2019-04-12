@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>getClass</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">这是一个盒子1</div>
+		<div class="wap">这是wap</div>
+		<div class="box on">这是一个盒子3</div>
+	</body>
+	
+	<script type="text/javascript">
+		var oBox = getClass("box")
+		
+		oBox[1].style.background = "pink"
+	//自己封装一个函数实现getElementsByClassName的功能   (getElementsByClassName是Window 下的函数)
+	//解决IE 6,7,8的不兼容的问题
+		function getClass(obj){
+				if(document.getElementsByClassName){
+					return document.getElementsByClassName(obj)
+				}else{
+					var all = document.getElementsByTagName('*')	//获取页面上所有的标签
+					var arr = []
+					for(var i=0;i<all.length;i++){		
+						var classNa = all[i].className		
+						var arrClass = classNa.split(" ")  //用空字符串切割标签下的每一个className，并且放到数组里
+						for(var j=0;j<classNa.length;j++){
+							if(arrClass[j]==obj){			//如果all[i]下的第j个数组的属性 有一个和obj 相等
+								arr.push(all[i])
+							}
+						}
+					}
+					return arr;
+				}
+			
+		}
+	</script>	
+	<!--<script type="text/javascript">
+		var oBox = getClass("box")
+		
+		oBox[1].style.background = "pink"
+	//自己封装一个函数实现getElementsByClassName的功能   (getElementsByClassName是Window 下的函数)
+	//解决IE 6,7,8的不兼容的问题
+		function getClass(obj){
+				if(document.getElementsByClassName){
+					return document.getElementsByClassName(obj)
+				}else{
+					var all = document.getElementsByTagName('*')	//获取页面上所有的标签
+					var arr = []
+					for(var i=0;i<all.length;i++){		
+						if(all[i].className == obj ){		//判断每一个标签的class属性
+							arr.push(all[i]);		//标签class属性只要是 obj，就把装进arr这个数组里面（这样就能用oBox[i]调用了）	
+						}			
+					}
+					return arr;
+				}
+			
+		}
+	</script>-->
+</html>

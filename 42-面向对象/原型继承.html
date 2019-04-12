@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			 * 	new 对象的三个特点
+			 * 		1.生成一个对象
+			 * 		2.new执行的这一次，函数内部的this指向当前new创建对象的本身
+			 * 		3.new执行的本次函数调用结束，默认返回这个new创建的对象
+			 */
+		function fn(){
+			this.name = arguments[0]
+		}
+		
+		fn.prototype = {
+			constructor : fn,
+			age : 18
+		}
+		
+		let obj = new fn("ss")
+		
+		//	function fn(){} 是构造函数/类
+		//	fn.prototype 是构造函数的原型
+		//	new fn() 	是构造函数（类）的实例化
+		//	obj = new fn() obj是fn()的实例
+		
+		//	判断一个属性是否为私有属性 用  hasOwnProperty() 
+		console.log(obj.hasOwnProperty("age"))
+		</script>
+	</body>
+</html>

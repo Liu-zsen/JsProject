@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>全选和隔行变色</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				color: #fff;
+			}
+			.box{
+				width: 400px;
+				height: 250px;
+				margin: 50px auto;
+				
+			}
+			.box ul li{
+				line-height: 30px;
+				padding-left: 30px;
+				background: url(img/ck.png) no-repeat 5px center;;
+				border-bottom: 1px solid #fff;
+			}			
+			.box ul .on{
+				line-height: 30px;
+				padding-left: 30px;
+				background: url(img/cked.jpg) no-repeat 5px center;;
+				border-bottom: 1px solid #fff;
+			}
+			.box ul li:nth-child(odd){
+				background-color: #6f5499 ;
+			}
+			.box ul li:nth-child(even){
+				background-color: #cdbfe3 ;
+			}			
+			.box ul li:last-child{
+				background-color: #fff ;
+				color: #000;
+			}
+			.box ul li:hover{
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<ul>
+				<li class="list">kevin</li>
+				<li class="list">米奇</li>
+				<li class="list">蛮王</li>
+				<li class="list">史努比</li>
+				<li class="list">熊本熊</li>
+				<li class="list">小黄人</li>
+				<li class="list">凯西</li>
+				<li class="all">全选</li>
+			</ul>
+		</div>
+		
+		<script type="text/javascript">
+			var abox = document.getElementById("box"),
+				alist = abox.querySelectorAll(".list"),
+				all = abox.querySelector(".all"),
+				length = alist.length
+				
+				for(var i=0;i<length;i++){
+					liname = alist[i].className
+					alist[i].ifCheck = false
+					alist[i].index = i  //自定义属性 存 下标索引
+					
+					alist[i].onclick = function(){
+							
+							alist[this.index].className = this.ifCheck?"": liname + " on"
+							this.ifCheck = !this.ifCheck
+							
+							
+					var bool = true;
+                    for (var k = 0; k < length; k++) {
+                        if ( !alist[k].ifCheck ){
+                            bool = false;
+                            break;
+                        }
+                    }
+                    /*for (var k = 0; k < length; k++) {
+                        if ( !aList[k].ifCheck ){
+                            break;
+                        }
+                    }
+                    var bool = k == length;*/
+                    all.ifCheck = bool;
+                   	all.className = bool?"on":""
+                   	
+					}  
+					
+					
+				}
+				
+				all.ifCheck = false
+				
+				all.onclick = function(){
+					bool = this.ifCheck
+					for(j=0;j<length;j++){
+							alist[j].className = bool?"":liname + " on"
+							alist[j].ifCheck = !bool
+					}
+					this.ifCheck = !bool
+					all.className =  bool?"":"on"
+				}
+			
+		</script>
+	</body>
+</html>

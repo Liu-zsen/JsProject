@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<script>
+			let arr = [8,7,1,56,51,4,30,17,9,29]
+			let len = arr.length;
+			//冒泡排序
+//			for (let  i = 0; i < len-1; i++) {	//比较i趟
+//				for (let j = len-1; j > i; j--) {	// 每趟j次/
+//					if(arr[j]<arr[j-1]){
+//						[arr[j],arr[j-1]] = [arr[j-1],arr[j]];//解构赋值
+//					}
+//				}
+//			}
+//				console.log(arr)
+				
+//			//选择排序
+//			for (let i = 0; i < len-1; i++) {
+//				let minIdx = i
+//				for (let j = i+1; j < len; j++) {
+//					if(arr[j]<arr[minIdx]){
+//						minIdx = j
+//					}
+//				}
+//				[arr[i],arr[minIdx]] = [arr[minIdx],arr[i]];//解构赋值
+//			}
+//			console.log(arr)
+			
+			arr.forEach((v,i,arr) => {
+				console.log(v,i)
+			})
+		</script>
+	</body>
+</html>

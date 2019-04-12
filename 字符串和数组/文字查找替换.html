@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>文字查找替换及高亮</title>
+		
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width: 665px;
+				height: 300px;
+				margin:70px auto ;
+				border: 1px solid #ddd;
+			}
+			.box .abtn,.box p{
+				line-height: 30px;
+				margin:15px;
+				text-align: justify;
+			}			
+			.box input{
+				height: 25px;
+				margin-right:5px;
+			}
+			.box span{
+				color:red;
+				font-size: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="abtn">
+					<input type="text" id='txt' value="家" /><input type="text" id='btxt' />
+					<input type="button" id="search" value="查找" />
+					<input type="button" id="replace" value="替换" />
+			</div>
+			<p>[行情特色]张家界国家森林公园与一脉相连的额索溪谷、天子山两大自然保护区组成的武陵源，是张家界的核心景区。张家界，奇峰三千，秀水八百,张家界的山大多是拔地而起山，山上峰峻石奇，或玲珑秀丽，或峥嵘可怖，或平展.....
+			</p>
+		</div>
+		<script>
+			var p = document.getElementsByTagName("p")[0];
+			var str = p.innerHTML
+			var arr = "";  //
+			
+			search.onclick = function(){
+				var arr = txt.value		//
+				a =  str.split(arr)	
+				var a = a.join("<span>"+arr+"</span>")//
+				p.innerHTML = a
+				
+			}
+
+			replace.onclick =  function(){
+				var arr = txt.value		//
+				a =  str.split(arr)	
+				var a = a.join("<span>"+btxt.value+"</span>")//
+				p.innerHTML = a
+//				for循环改变span				
+//				var b = btxt.value
+//				osp =  document.querySelectorAll("span")
+//				for(var i=0;i<osp.length;i++){
+//					osp[i].innerHTML = b
+//				}
+			
+			}
+			
+		</script>
+	</body>
+</html>

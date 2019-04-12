@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>圆周运动</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position:relative;
+				width: 300px;
+				height: 300px;
+				margin: 50px auto;
+				background: #666;
+			}
+			#box span{
+				position:absolute;
+				top: 0;
+				left: 150px;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: pink;
+			}
+			#wrp {
+				position:relative;
+				top:-350px;
+				width: 300px;
+				height: 300px;
+				margin: 50px auto;
+			}
+			#wrp i{
+				display: block;
+				position:absolute;
+				top: 0;
+				width: 3px;
+				height: 2px;
+				background: #FFC0CB;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<span></span>
+		</div>
+		<div id="wrp"></div>
+		<script type="text/javascript">
+			var obox = document.getElementById("box")
+			var aspan = obox.getElementsByTagName("span")[0]
+			var start = 90, r = 145
+			
+			setInterval(function(){
+				start -= 2
+				var rad = (start/180)*Math.PI
+				var x = Math.cos(rad)*r
+				var y = Math.sin(rad)*r
+				var left = r+x
+				var top = r-y
+				aspan.style.left = left+"px"
+				aspan.style.top = top+"px"
+				
+				
+				if(start>-270){
+					var x =  "<i style='left:"+(left+4)+"px;top:"+(top+4)+"px'></i>"
+					wrp.innerHTML += x
+				}
+				
+			},13)
+		</script>
+	</body>
+</html>

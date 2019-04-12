@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>广告切换</title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+				font-family:"微软雅黑";
+				font-size:14px;
+			}
+			ul,li{
+				list-style: none;
+				cursor: pointer;
+			}
+			.box{
+				width:430px;
+				height: 205px;
+				margin: 50px auto;
+			}
+			#left {
+				width:100px;
+				float: left;
+			}
+			#left ul{
+				width:100px;
+				height: 205px;
+				list-style: none;
+			}
+			#left ul li{
+				width:100px;
+				height:50px;
+				line-height:50px;
+				background-color: #000;
+				border-top: 1px solid #fff;
+				text-align: center;
+				color: #fff;
+			}
+			
+			#right{
+				position:relative;
+				float: left;
+				width: 326px;
+				height: 204px;
+				
+			}
+			#right ul li{
+				position:absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				display: none;
+			}			
+			#right div{
+				position:absolute;
+				bottom: 0;
+				width: 100%;
+				height: 35px;
+				background: #0009;
+				text-align: right;
+			}			
+			#right div span {
+				display: inline-block;
+				width: 35px;
+				height: 35px;
+				line-height: 35px;
+				background: #ddd;
+				text-align: center;
+				margin-left: 2px;
+				cursor: pointer;
+			}			
+			#left .on{
+				background:#930;
+			}
+			#right .on{
+				background:#930;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div id="left">
+				<ul>
+					<li  class="on">极速免税店</li>
+					<li>美妆商城</li>
+					<li>服装运动</li>
+					<li>鞋包配饰</li>
+				</ul>
+			</div>
+			<div id="right" class="adimg">
+				<ul>
+					<li style="display:block">
+						<img src="img/s1.jpg"	width="326" height="204" alt="" />
+						<div></div>
+					</li>
+					
+					<li>
+						<img src="img/1.jpg"	width="326" height="204" alt="" />
+						<div></div>
+					</li>
+					
+					<li>
+						<img src="img/m1.jpg"	width="326" height="204" alt="" />
+						<div></div>
+					</li>
+					
+					<li>
+						<img src="img/1.jpg"	width="326" height="204" alt="" />
+						<div></div>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var eli = document.getElementById("left").querySelectorAll("li"),
+				rli = document.getElementById("right").getElementsByTagName("li"),
+				
+				len = eli.length,
+				Eindex =eli[0],
+				Rindex =rli[0]
+				
+				
+//			console.log(rli.length)
+				for(var i=0;i<len;i++){
+					eli[i].a = i
+					eli[i].onmouseenter =function(){
+						Eindex.className = ""
+						Eindex = this
+						Eindex.className = "on"
+						
+						Rindex.style.display = "none"
+						Rindex  = rli[this.a]
+						Rindex.style.display = "block"
+					}
+				}
+				
+				arrImg = [
+					['img/s1.jpg','img/s2.jpg','img/s3.jpg','img/s4.jpg','img/s5.jpg'],
+					['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'],
+					['img/m1.jpg','img/m2.jpg','img/m3.jpg','img/m4.jpg','img/m5.jpg'],
+					['img/m5.jpg','img/s5.jpg']
+				]
+				//用数组存储img
+				//
+				var  str = []   //定义一个空数组 来存储 内容
+				for(var i=0;i<len;i++){
+					
+					change(rli[i],arrImg[i])
+				}
+				function change(rig,arg){
+					var div  = rig.getElementsByTagName("div")[0]  //获取每个li 当中的第一个 div
+					for(var j=0;j<arg.length;j++){
+						if(j==0){
+							div.innerHTML = "<span class='on'>"+1+"</span>" 
+						}else{
+							div.innerHTML += "<span>"+(j+1)+"</span>"
+						}
+					}
+					
+					str.push(div.innerHTML)  //将的所有内容储存到 str
+					var span = div.getElementsByTagName('span') //获取div下的每一个span标签
+					var	aImg = rig.getElementsByTagName("img")[0]
+					var oldSp = span[0]
+						for(var j=0;j<arg.length;j++){
+							span[j].b = j  //
+//							console.log( aImg)
+							span[j].onmouseenter =function(){
+								oldSp.className = ""
+								oldSp = this
+								oldSp.className = "on"
+								aImg.src = arg[this.b]
+						}	
+					}
+				}
+				
+		</script>
+	</body>
+</html>

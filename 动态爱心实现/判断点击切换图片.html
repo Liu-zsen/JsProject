@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>点击切换下一张图</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			a{text-decoration: none;cursor: pointer;}
+			ul, li{list-style: none;}
+			.container{
+				width:1200px;
+				margin: 150px auto;
+			}
+			body{
+				font-family:"微软雅黑";
+				font-size: 14px;
+				color: #ccc;
+			}
+			.container .tab {
+				width: 350px;
+				margin: auto;
+			}
+			ul::after{
+				content:"";
+				display:block;
+				clear:both;
+			}
+			.container .tab li{
+				float: left;
+				margin-right: 10px ;
+				padding: 7px 15px;
+				background: #000;
+				color: #fff;
+			}
+			.container .box {
+				width: 350px;
+				height:260px;
+				margin: auto;
+				background: #FFC0CB;
+				position: relative;
+			}
+			.container .box .page-top{
+				background: #000;
+				margin: auto;
+				color: #fff;
+				width: 350px;
+				opacity: 0.5;
+				text-align: center;
+				position: absolute;
+			}
+			.container .box .page-box li{
+				display: none;
+				font-size: 0;
+			}	
+			.container .box .page-box .on{
+				display: block;
+			}				
+			.box li img{
+				width: 100%;
+				height: 260px;
+				}
+			.box .page-bottom{
+				background: #000;
+				margin: auto;
+				color: #fff;
+				width: 350px;
+				opacity: 0.5;
+				text-align: center;
+				position: absolute;
+				bottom: 0;
+			}
+			.pre{
+				position: absolute;
+				top: 50%;
+				padding: 5px;
+				background: #000;
+				opacity: 0.5;
+				color: #fff;
+			}
+			.next{
+				position: absolute;
+				top: 50%;
+				right: 0;
+				padding: 5px;
+				background: #000;
+				opacity: 0.5;
+				color: #fff;
+			}
+			.container .tab .hover{
+				background: #fe6604;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="tab">
+				<ul>
+					<li class="hover">循环切换</li>
+					<li>单边切换</li>
+				</ul>
+			</div>
+			<div class="box">
+				
+					<div class="info">
+						<p class="page-top"><span>1</span>/6</p>
+						<p class="page-bottom">第<span>一</span>张图片</p>	
+					</div>
+					<div class="page-box">
+						<ul>
+							<li class="on"><img src="img/1.jpg" alt=""></li>
+							<li ><img src="img/2.jpg" alt=""></li>
+							<li ><img src="img/3.jpg" alt=""></li>
+							<li ><img src="img/4.jpg" alt=""></li>
+							<li ><img src="img/5.jpg" alt=""></li>
+							<li ><img src="img/6.jpg" alt=""></li>
+						</ul>	
+					</div>
+				<a class="pre">上一张</a>	
+				<a class="next">下一张</a>
+				
+				<script>
+					var oBtn = document.querySelectorAll(".box a"), //先获取上下页按钮
+						obox = document.querySelector(".box"),
+						oImg = obox.querySelectorAll(".page-box li"),//获取六张图片列表
+						length = oImg.length,
+						x = 0,				//把X=0当做 0~5 图片列表的下标
+						flag = true,
+						opage = obox.querySelectorAll(".info p span"),	//获取当前页数的显示
+						arr = ['一','二','三','四','五','六'],	//定义一个数组，来解决中文页码
+						
+						otab = document.querySelectorAll(".tab ul li")
+							
+						otab[0].onclick = function(){
+							this.className = "hover";
+							otab[1].className = "";
+							flag = true
+						}
+						otab[1].onclick = function(){
+							this.className = "hover";
+							otab[0].className = "";
+							flag = false;
+						}
+						
+						oBtn[1].onclick = function(){   //当点击下一张图片时 
+							oImg[x].className = "";		//去掉上一张图的类名	
+							x++;
+							
+							
+							//当序号遇到临界值，会执行if语句
+							if(x>length-1){
+									// 判断当前和处于那种状态
+								if(flag){
+									x=0
+								}else{
+									alert("已经是最后一张了");
+									x=length-1;
+								}	
+							}		
+
+
+							
+
+							oImg[x].className = "on";	//将类名赋给下一张
+							
+							opage[0].innerHTML = x+1 ;
+							opage[1].innerHTML = arr[x]
+						}
+						
+						//上一页同理
+						oBtn[0].onclick = function(){
+							oImg[x].className = "";		//去掉上一张图的类名	
+							x--;
+							if(x<0){
+								
+								if(flag){
+									x=length-1
+								}else{
+									alert("这是第一张了");
+									x=0;
+								}	
+							}
+							oImg[x].className = "on";	//将类名赋给下一张
+							opage[0].innerHTML = x+1  
+							opage[1].innerHTML = arr[x]
+						}
+				</script>	
+			</div>
+		</div>
+	</body>
+</html>

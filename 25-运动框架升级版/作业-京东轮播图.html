@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>京东轮播图</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				font-family: Arial;
+			}
+			.box{
+				position: relative;
+				width: 590px;
+				height: 470px;
+				margin: 100px auto;
+				box-shadow: 0px 0px 5px #aaa;
+			}
+			.box ul{
+				list-style: none;
+			}
+			.box ul li{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				z-index: 0;
+				/*transition: opacity 500ms ease-in-out 0s;*/
+			}
+			.box ul li img{
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.box ul li.on{
+				opacity: 1;
+				z-index: 1;
+			}
+			.box .slider{
+				position: absolute;
+				width: 100%;
+				bottom: 10px;
+				line-height: 20px;
+				font-size: 0;
+				text-align: center;
+				z-index: 1;
+			}
+			.box .slider i{
+				display: inline-block;
+				position: relative;
+				width: 15px;
+				height: 15px;
+				margin: auto 2px;
+				border-radius: 50%;
+				vertical-align: middle; 
+				cursor: pointer;
+			}
+			.box .slider i:after{
+				content: "";
+				display: block;
+				position: absolute;
+				top:25%;
+				left:25%;
+				width: 4px;
+				height: 4px;
+				border-radius:50% ;
+				border: 2px solid rgba(255,255,255,.9);
+			}		
+			.box .slider i.dot{
+			    background: rgba(255,255,255,.3);
+			}
+			.box .slider i.dot:after{
+				background: #fff;
+			}
+			
+			.box .btn{
+			    overflow: hidden;
+			    width: 100%;
+			    height: 100%;
+			    z-index: 2;
+			}
+			.box .btn span{
+				display: none;
+				position: absolute;
+				width:25px;
+				height: 40px;
+				line-height: 40px;
+				background: rgba(0,0,0,.4);
+				text-align: center;
+				font-size: 18px;
+				color:#fff;
+				cursor: pointer;
+				z-index: 1;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+			}
+			.box:hover .btn span{
+				display: block;
+			}	
+			.box:hover .btn span:hover{
+				background: rgba(0,0,0,.6);
+			}			
+			.box .btn .pre{
+				top:45%;
+				left:0;
+			}
+			.box .btn .next{
+				top:45%;
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<ul>
+				<li class="on"><img src="img/1.jpg" alt="" /></li>
+				<li><img src="img/2.jpg" alt="" /></li>
+				<li><img src="img/3.jpg" alt="" /></li>
+				<li><img src="img/4.jpg" alt="" /></li>
+				<li><img src="img/5.jpg" alt="" /></li>
+				<li><img src="img/6.jpg" alt="" /></li>
+				<li><img src="img/7.jpg" alt="" /></li>
+				<li><img src="img/8.jpg" alt="" /></li>
+			</ul>
+			<div class='slider'>
+				<i class="dot"></i>
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+			</div>
+			<div class="btn">
+				<span class="pre"> &lt; </span>
+				<span class="next"> &gt; </span>
+			</div>
+		</div>
+			<script src="js/Tween.js"></script>
+			<script>
+			(function(){
+				var obox = document.getElementById("box"),
+					ali = obox.querySelectorAll('ul li'),
+					dot = obox.querySelectorAll('.slider i'),
+					abtn = obox.querySelectorAll('.btn span'),
+					len = dot.length
+					n = 0;
+					
+					for(var i=0;i<len;i++){
+						dot[i].i = i 
+						dot[i].onmouseenter = function(){
+							if(this.i === n){
+								return
+							}
+							fn(this.i,n)
+						}
+					};
+					for (i=0;i<2;i++) {
+						(function(i){
+								abtn[i].onclick = function(){
+									if(i){
+										n++;
+										n %= len;
+									}else{
+										n--;
+										if(n<0)n = len - 1;
+									}
+									fn(n,n);
+								}
+						})(i);					
+					}
+					obox.onmouseenter = function(){
+						clearInterval(window.b)
+					}
+					obox.onmouseleave = function(){
+						auto()
+					};
+					auto();
+					function auto(){
+						window.b = setInterval(function(){
+						n++;
+						n %= len;
+						fn(n,n);
+						document.title = n
+						},2500)
+					}
+					function fn(index,x){
+						
+							for(var j=0;j<len;j++){
+								dot[j].className = ""
+								ali[j].stop && cancelAnimationFrame(ali[j].stop.timer)	//需要清除，否则切换页面标签页的时候会出现Bug
+								ali[j].stop = tMove(ali[j],{opacity:0,zIndex:0},300);
+							}
+							dot[index].className = "dot" ;
+							ali[index].stop && cancelAnimationFrame(ali[index].stop.timer) 
+							ali[index].stop = tMove(ali[index],{opacity:1,zIndex:1},300);
+							n = index;
+					}
+			})();
+			</script>
+	</body>
+</html>

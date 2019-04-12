@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>倒计时</title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#box{
+				width: 380px;
+				height: 100px;
+				margin: 50px auto;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			
+				//Jsonp
+				let oS = document.createElement('script')
+				oS.src = "http://api.k780.com:88/?app=life.time&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json&jsoncallback=fly"
+				
+				oS.onload = function(){
+					document.body.removeChild(oS)
+					console.log(oS.src)
+				}
+				$("body").append(oS)
+				function fly(json){
+					console.log(json.result.datetime_1)
+				}
+				
+
+			(function(){
+
+				let oBox = document.getElementById("box")
+				countTime("10.3 13:37:00",function(day,hh,mm,ss){
+					oBox.innerHTML = `距离开抢的倒计时还有: ${day}天 ${hh}小时 ${mm}分 ${ss}秒`
+				},function(){
+					let op = document.createElement("p")
+					op.innerHTML = `开抢了!`
+					oBox.appendChild(op)
+				})
+				
+				function countTime(setTime,fn,end){
+					let reg = /[\/\,\-\s\:\。\，\.]/;
+					let arr = setTime.split(reg);
+					if (arr[0].length<4) {	arr.unshift(""+new Date().getFullYear()) };
+					let Y = arr[0] ,
+						M = arr[1]-1,
+						D = arr[2],
+						h = arr[3],
+						m = arr[4],
+						s = arr[5];
+					setTime = new Date(Y,M,D,h,m,s)
+					let timer = setInterval(count,1000)	
+					count();
+						function count(){
+							let nowDate = setTime - new Date;
+							let day = Math.floor(nowDate/1000/60/60/24),
+							hh = Math.floor(nowDate/1000/60/60) %24,
+							mm = Math.floor(nowDate/1000/60) %60,
+							ss = Math.floor(nowDate/1000) %60;
+							if(nowDate < 500){
+								end && end();
+								clearInterval(timer);
+								return ;
+							}
+							fn(day,hh,mm,ss)
+						}
+				}
+			})();
+		</script>
+	</body>
+</html>

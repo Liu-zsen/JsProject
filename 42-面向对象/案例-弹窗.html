@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弹窗</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				width: 100px;
+				height: 50px;
+				background: #ddd;
+				margin: 100px auto;
+			}
+			#wrap{
+				width: 150px;
+				height: 50px;
+				margin: auto;
+				background: pink;
+			}
+			
+			p::after{
+				display: inline-block;
+				content: "";
+				height: 100%;
+				vertical-align: middle;
+			}
+			div::after{
+				display: inline-block;
+				content: "";
+				height: 100%;
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<div id="wrap"></div>
+		<script type="text/javascript">
+			(function(){
+			
+				let oBox = document.getElementById("box")
+				let oWrap = document.getElementById("wrap")
+			//父类
+				function ES5_alert(json){
+					this.id = `a${json.id.slice(1)}`	//切掉第一个字符
+					this.Tit = json.title || "请输入您的标题"
+					this.content = json.content || "请输入您的内容"
+					this.alert()		//创建弹窗函数
+					this.alertId = document.getElementById(this.id)
+					this._info = document.getElementById(`${this.id}_info`)
+					this._title = this._info.getElementsByTagName("p")[0]
+					this._content = this._info.getElementsByTagName("div")[0]
+					//	cssList
+					this.alertId.style.cssText = "position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgb(170,170,170);background: rgba(0,0,0,.5);transition: .2s;"
+					this._info.style.cssText = "position: absolute;top: 0;bottom: 0;right: 0;left: 0;width: 380px;height: 180px;margin: auto;border-radius: 5px;"
+					this._title.style.cssText = "height: 20%;background: pink;color: #fff;text-indent: 10px;border-top-left-radius:inherit;border-top-right-radius:inherit;"
+					this._content.style.cssText = "height: 80%;background: #fff;color: #000;text-align: center;border-bottom-left-radius:inherit;border-bottom-right-radius:inherit;"
+					this.close()
+					
+					//点击外层，关闭弹窗
+					this.alertId.onclick = function(e){
+						this.close()
+					}.bind(this)
+					
+					//阻止冒泡
+					this._info.onclick = e => {
+						e.stopPropagation()
+					}
+				}
+			//原型	
+				ES5_alert.prototype = {
+					//初始化alert界面
+					alert : function(){
+						this._alert = document.createElement("div")
+						this._alert.id = this.id
+						this._alert.innerHTML = `<div id=${this.id}_info><p>${this.Tit}</p><div>${this.content}</div></div>`
+						
+						document.body.appendChild(this._alert)
+					},
+					
+					//关闭弹窗
+					close : function(){
+						this.alertId.style.visibility = "hidden"
+						this.alertId.style.opacity = "0"
+						return this
+					},
+					
+					//打开
+					open : function(){
+						this.alertId.style.visibility = "visible"
+						this.alertId.style.opacity = "1"
+						return this
+					}
+				}
+			
+			//	子类继承
+				function Alert_Child(json){
+					ES5_alert.call(this,json)
+					this.title_bg = json.title_bg
+					this.content_bg = json.content_bg
+				}
+			//	原型继承
+				function F(){}
+				F.prototype = ES5_alert.prototype
+				Alert_Child.prototype = new F
+				
+				Alert_Child.prototype.bgColor = function(){
+					this._title.style.backgroundColor = this.title_bg;
+					this._content.style.backgroundColor = this.content_bg;
+					console.log(this._content)
+					return this
+				}
+			//	类的实例化
+				clickBox = new ES5_alert({
+					id : "#box",
+					title : "这是个弹出标题",
+					content : "这是弹窗的内容"
+				})
+				clickWrap = new Alert_Child({
+					id : "#wrap",
+					title : "这是个弹出标题",
+					content : "这是弹窗的内容",
+					title_bg:"#000",
+					content_bg: "#ffc0cb"
+				})
+				
+				oBox.onclick = function(){
+					clickBox.open()
+				}
+				oWrap.onclick = function(){
+					clickWrap.bgColor().open()
+				}
+				
+			})()
+		</script>
+	</body>
+</html>

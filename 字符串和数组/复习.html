@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<title>商品价格排序</title>
+	<meta name='keywords' content=''>
+	<meta name='description' content=''>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		ul, ol ,li{list-style: none;}
+		body{
+			font-family: "Microsoft Yahei";
+			color: #666;
+			font-size: 14px;
+		}
+		.box{
+			margin: 50px auto;
+			width: 950px;
+		}
+		.box1 {
+			border:1px solid #ddd;
+			line-height: 40px;
+			vertical-align: middle;
+		}
+		.box1 ul li{
+			display:inline-block;
+			margin: auto 25px; 
+			cursor:pointer;
+		}	
+		.box1 ul,.box ul {
+			position: relative;
+		}
+		.box2{
+			margin:10px;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.box2 ul li {
+			position:relative;
+			float: left;
+			border: 1px solid #DDD;
+			padding: 10px;
+			margin: 10px;
+		}
+		.box2 ul li img{
+			width: 190px;
+			height: 190px;
+		}
+		.box1 .hide{
+			display:none;
+			position:absolute;
+			top:0;
+			background: #fff;
+			padding: 0 10px;
+			border: 1px solid #ddd;
+			border-top:none;
+			z-index: 1;
+		}
+		.box2 ul li .danjia{
+			position:absolute;
+			right: 10px;
+ 			bottom: 10px;
+			width:50px;
+			height:50px;
+			line-height: 50px;
+ 		    text-align: center;
+			background-color:#FF0000;
+ 		    color: #ffd30f;
+ 		    font-weight:bold;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body><!--用户在网页中可见的区域-->
+	<div class="box">
+		<div class="box1">
+			<ul>
+				<li><a>流行</a></li>
+				<li><a>热销</a></li>
+				<li><a>上新</a></li>
+				<li>
+					<a id="price">价格</a>
+					<div class="hide">
+						<p>价格从低到高</p>
+						<p>价格从高到低</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="box2">
+			<ul>
+				<li>
+					<img src="img/xh_img1.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>213</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img2.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>513</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img3.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>89</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img4.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>128</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img5.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>320</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img6.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>462</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img7.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>305</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img8.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>88</i></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var ahide = document.querySelector(".box1 .hide")
+		var topli = document.querySelectorAll(".box1 li")  //获取面包屑 价格按钮
+		var oP = document.querySelectorAll(".box1 .hide p")  //获取面包屑 价格排序文字
+		var ali =document.querySelectorAll(".box2 li") 
+		var Aprice = document.querySelectorAll(".danjia i")  // 列表价格
+		var liprice = []
+		
+		topli[3].onmouseenter = function(){
+			ahide.style.display = 'block'
+		}
+		topli[3].onmouseleave = function(){
+			ahide.style.display = 'none'	
+		}
+			for(var i=0;i<oP.length;i++){
+				oP[i].index = i
+				oP[i].onclick = function(){
+					ahide.style.display = "none"
+					price.innerHTML = this.innerHTML
+					price.style.color = "red"
+					
+					var x = this.index
+					liprice.sort(function(a,b){			//先排序再执行函数
+						return x?b-a:a-b				//三目
+					});
+					Arrsort();
+				}
+			}
+		//1,for循环 获取 列表的内容和单独的价格 
+		var str = [] 		//用作二维数组
+		for(var i=0;i<ali.length;i++){
+			var a = ali[i].innerHTML
+			var b = Aprice[i].innerHTML
+			
+			var arr = []    //定义空数组存储  a , b
+			arr[0] = a
+			arr[1] = b
+			str.push(arr)
+			liprice.push(b)
+		}console.log(str.length)
+		// 用嵌套循环比较  进行排序
+		function Arrsort(){
+			for(var i=0;i<ali.length;i++){
+				for(var j=0;j<ali.length;j++){
+					if(liprice[i]==str[j][1]){
+						ali[i].innerHTML = str[j][0]
+						
+					}
+				}
+			}
+		}	
+	</script>
+</body>
+</html>

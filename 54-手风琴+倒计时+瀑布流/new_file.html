@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>瀑布流+按需加载-复习</title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			ul li{
+				list-style: none;
+			}
+			a{text-decoration: none;}
+			.clearfix:after{
+				content:"";
+				display: block;
+				clear: both;
+			}
+			#box{
+				position: relative;
+				width: 835px;
+				margin: 50px auto;
+				overflow: hidden;
+			}
+			#box ul {
+				width: 105%;
+				height: 100%;
+			}
+			#box ul li{
+				float: left;
+				width:265px;
+				margin:0 18px 8px 0;
+			}
+			#box ul li .content{
+				width: 100%;
+				border: 1px solid #e0e0e0;
+				margin-bottom: 10px;
+			}
+			#box ul li .content img{
+				width: 100%;
+			}
+			#box ul li .content .descript{
+				display: block;
+				margin: auto;
+				padding: 5px;
+				font-size: 14px;
+				text-align: justify;
+				color: #333;
+			}
+			#box ul li .content .info{
+				position: relative;
+				width: 100%;
+				height: 40px;
+			}
+			#box ul li .content a:hover{
+				color:#b70032;
+			}
+			#box ul li .content .info p{
+				height: 39px;
+				line-height: 39px;
+				background:#f1f1f1;
+				color:#333;
+				text-indent: 5px;
+				font-size: 14px;
+			}
+			#box ul li .content .info .time{
+				float: left;
+				width: 180px;
+				border-top: 1px solid #e0e0e0;
+				border-right: 1px solid #e0e0e0;
+			}
+			
+			#box ul li .content .info .more{
+				float: left;
+				width: 84px;
+				text-align: center;
+				border-top: 1px solid #e0e0e0;
+			}
+			#fixed{
+				position: fixed;
+				right: 20px;
+				bottom:10%;
+				width: 50px;
+				height: 50px;
+				background: #ddd;
+				cursor: pointer;
+			}
+			#fixed:after{
+				content: "";
+				position: absolute;
+				top: 20px;
+				left: 50%;
+				width: 15px;
+				height: 15px;
+				margin-left: -10px;
+				border: 3px solid;
+				border-color: #fff #fff transparent transparent;
+				transform: rotate(-45deg);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<ul class="clearfix">
+				<li>
+				<!--	<div class="content">
+						<img src="img/01.jpg" alt="" />
+						<a class="descript" href="">你们男神都爱的倪妮 就是个大写哒美好</a>
+						<div class="info">
+							<p class="time">2016/03/18 20:08</p>
+							<p class="more"><a href="">阅读全文</a></p>
+						</div>
+					</div>	-->
+				</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<div id="fixed"></div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="js/data.js"></script>
+		<script>
+			let $oBox = $("#box");
+			let $li = $oBox.find("ul li")
+			let index = -1;
+			let length = imgData.length-1;
+			let $fix = $("#fixed")
+			
+			createCont(10);
+			
+			//返顶函数
+			$fix.css("display","none")
+			$fix.click(ogBack)
+			function ogBack(){
+				$("html,body").stop().animate({
+					scrollTop : 0
+				})
+				return false;
+			}
+			
+			//按需加载
+			$(window).on("scroll",function(){
+				let STop  = $(window).height() + $(window).scrollTop()
+				if(STop > $oBox.height()){
+					createCont(10);
+				}
+				($(window).scrollTop()>200)?$fix.fadeIn():$fix.fadeOut();
+			})
+			
+			//生成图片区块
+			function createCont(num){
+				add(num);
+			}
+			
+			//每次生成num个
+			function add(num){
+					let len = num + index
+					len = Math.min(length,len)
+					if(index < len){
+						index++
+					}else{
+						return
+					}
+					//创建一个图片对象,用来存储imgData格式的src
+					let data = imgData[index]
+					let oImg = new Image();
+					oImg.src = data.src
+					oImg.onload = function(){	//当oImg加载完之后执行
+						$div = $(`<div class="content">
+							<img src=${data.src} alt="" />
+							<a class="descript" href="">${data.dec}</a>
+								<div class="info">
+									<p class="time">${data.time}</p>
+									<p class="more"><a href="">阅读全文</a></p>
+								</div>
+							</div>`);
+						$div.css("display","none")	
+						minH().append($div);
+						$div.fadeIn()
+						add(num-1);//回调函数
+					}
+			}			
+			
+			//遍历每个Li的高度,筛选出最小高
+			function minH(){
+				let obj;
+				let xh = 9999;
+				$li.each(function(i){
+					let height = $(this).height();
+					if(height<xh){
+						xh = height;
+						obj = this;
+					}
+				})
+				return $(obj)		//返回最小高的对象
+			}
+			
+		</script>
+	</body>
+</html>

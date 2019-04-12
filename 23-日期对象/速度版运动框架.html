@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>速度版运动框架</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: relative;
+				top: 0;
+				left: 0;
+				width: 50px;
+				height: 80px;
+				background: #ddd;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script type="text/javascript">
+			var oBox = document.getElementById("box")
+			//先解决 requestanimationframe 兼容问题
+
+			
+			move(oBox,'left',800,6); //传参
+			
+			function move(obj,arr,end,speen){
+				window.requestAnimationFrame = window.requestAnimationFrame || function(fn){setTimeout(fn,1000/60)};//设置
+				window.cancelAnimationFrame = window.cancelAnimationFrame || clearTimeout;	//清除
+				var cssStyle = obj.currentStyle || getComputedStyle(obj)	//获取#box在页面上默认的所有属性
+				var state = parseFloat(cssStyle[arr])			//获取目标的属性如：宽度
+//				var end = 500 ;		//设置目标的属性运动结束后的属性值
+//				var speen = 6;		//用作变化的速度
+				var flag = state > end
+				//封装一个运动框架
+				if(flag){
+					speen = -speen;
+				}
+				(function fn(){
+					state += speen
+					if(flag?state<=end:state>=end){
+						state = end
+					}else{
+						requestAnimationFrame(fn)
+						}
+					obj.style[arr] = state + "px"
+				})();
+			}
+		</script>
+	</body>
+</html>

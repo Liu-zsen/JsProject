@@ -1,0 +1,198 @@
+<!doctype html><!--声明文档类型  网页文档-->
+<html>
+<head><!--用户是看不见的 给浏览器看的-->
+	<meta charset='UTF-8'><!--国际编码 字符的编码格式-->
+	<!--网页三要素 title keywords description-->
+	<title>商品价格排序</title><!--网页的标题-->
+	<meta name='keywords' content=''><!--让搜索引擎找到我们的网页-->
+	<meta name='description' content=''><!--网页的介绍-->
+	<style>/*   css  层叠样式表 */
+		*{
+			margin:0;
+			padding:0;
+		}
+		ul, ol ,li{list-style: none;}
+		body{
+			font-family: "Microsoft Yahei";
+			color: #666;
+			font-size: 14px;
+		}
+		.box{
+			margin: 50px auto;
+			width: 950px;
+		}
+		.box1 {
+			border:1px solid #ddd;
+			line-height: 40px;
+			vertical-align: middle;
+		}
+		.box1 ul li{
+			display:inline-block;
+			margin: auto 25px; 
+			cursor:pointer;
+		}	
+		.box1 ul,.box ul {
+			position: relative;
+		}
+		.box2{
+			margin:10px;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.box2 ul li {
+			position:relative;
+			float: left;
+			border: 1px solid #DDD;
+			padding: 10px;
+			margin: 10px;
+		}
+		.box2 ul li img{
+			width: 190px;
+			height: 190px;
+		}
+		.box1 .hide{
+			display:none;
+			position:absolute;
+			top:0;
+			background: #fff;
+			padding: 0 10px;
+			border: 1px solid #ddd;
+			border-top:none;
+			z-index: 1;
+		}
+		.box2 ul li .danjia{
+			position:absolute;
+			right: 10px;
+ 			bottom: 10px;
+			width:50px;
+			height:50px;
+			line-height: 50px;
+ 		    text-align: center;
+			background-color:#FF0000;
+ 		    color: #ffd30f;
+ 		    font-weight:bold;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body><!--用户在网页中可见的区域-->
+	<div class="box">
+		<div class="box1">
+			<ul>
+				<li><a>流行</a></li>
+				<li><a>热销</a></li>
+				<li><a>上新</a></li>
+				<li>
+					<a id="price">价格</a>
+					<div class="hide">
+						<p>价格从低到高</p>
+						<p>价格从高到低</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="box2">
+			<ul>
+				<li>
+					<img src="img/xh_img1.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>213</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img2.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>513</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img3.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>89</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img4.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>128</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img5.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>320</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img6.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>462</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img7.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>305</i></div>
+				</li>
+				<li>
+					<img src="img/xh_img8.jpg">
+					<p><a>粉色玫瑰系列</a></p>
+					<div class="danjia">$<i>88</i></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var ahide = document.querySelector(".box1 .hide")
+		var topli = document.querySelectorAll(".box1 li")  //获取面包屑 价格按钮
+		var oP = document.querySelectorAll(".box1 .hide p")  //获取面包屑 价格排序文字
+		var ali =document.querySelectorAll(".box2 li") 
+		var djprice = document.querySelectorAll(".danjia i")  // 列表价格
+		var liprice = []
+		
+		topli[3].onmouseenter = function(){
+			ahide.style.display = "block"
+		}
+		topli[3].onmouseleave = function(){
+			ahide.style.display = "none"
+		}
+			
+    	var str = []						//用作二维数组
+    	for(var i=0;i<ali.length;i++){
+    		var a = "",dj = ""
+   	   		a += ali[i].innerHTML			//1.获取每一个列表里的内容
+   	   		dj += djprice[i].innerHTML		//2.获取每个列表下的价格
+   	   		
+   	   		var arr = []			
+   	   		arr[0] = a
+   	   		arr[1] =  dj		
+   	   		str.push(arr)					//将内容存到str数组
+   	   		liprice.push(dj)				//将单价存到liprice数组
+     	  console.log(dj)
+    	}
+    	
+		for(var i=0;i<oP.length;i++){
+			oP[i].index = i
+			oP[i].onclick = function(){
+				x = this.index
+				ahide.style.display ="none"
+				price.innerHTML = this.innerHTML
+				price.style.color = "red"
+				liprice.sort(function(a,b){		//3.将每个价格进行比较（排序）
+					return x?b-a:a-b			//三目
+				});
+				Arrsort();				// 再执行函数
+			}
+		}
+    	
+//4.用嵌套循环将1和2进行比较 	
+    	function Arrsort(){
+    		for(var i=0;i<ali.length;i++){
+    			for(var j=0;j<str.length;j++){
+    				
+    				if(liprice[i]===str[j][1]){		//将str[j][1] 和liprice[] 比较
+    					ali[i].innerHTML = str[j][0]	
+    				}
+    			}
+    		}
+    	}
+
+	
+			
+	</script>
+</body>
+</html>

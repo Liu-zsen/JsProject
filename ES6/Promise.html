@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise</title>
+	</head>
+	<body>
+		<script>
+			new Promise((resolve,reject) =>{
+				
+				setTimeout(() => {
+					try{
+						console.log(1)
+						resolve(true)
+					}catch(err){
+						reject(err)
+					}
+				},100)
+				
+			})
+			.then(msg => {
+				setTimeout(() => {
+					console.log("事件2")
+				},50)
+			},err => {
+				console.log(err)
+			})
+			.then(msg => {				//then() 本身返回一个Promise
+				setTimeout(() => {
+					console.log("事件3")
+				},16)
+//				return new Promise((res,rej) => rej("事件3失败了"))
+			})
+			.then(msg => {
+				console.log(msg)
+			}, err => {
+				console.log(err)
+			})
+			.catch(err => {		//捕获前面的报错
+				console.log(err)
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片延时加载</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul,li{list-style: none;}
+			#box{
+				position: relative;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<ul>
+				<li>
+					<p>大家好</p>
+					<p>大家好</p>
+					<p>大家好大家好大家好大家好大家好大家好大家好大家好大家好大家好</p>
+					<p>大家好</p>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<img rsrc="img/1.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<img rsrc="img/2.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/3.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/4.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/5.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/6.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/7.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/8.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/01.webp" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img rsrc="img/05.webp" alt="" />
+				</li>
+			</ul>
+		</div>
+	<script>
+			(function(){
+				let aIMG = document.getElementsByTagName("img")
+				let ali  = document.querySelectorAll("#box ul li")
+				let len = aIMG.length
+				let aImg = [].slice.call(aIMG)
+				for(let i=0;i<len;i++){
+					aImg[i].src = "img/loading.jpg"
+					aImg[i].height = 300
+				}
+				console.log(ali[1].offsetTop )
+				//获取窗口高	
+                if ( document.addEventListener ){
+                    window.addEventListener("scroll" , scroll , false);
+                }else{
+                    window.attachEvent("onscroll" , scroll);
+                }
+                scroll()
+				function scroll(){
+					let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;	//窗口高
+					let Top = scrollTop + document.documentElement.clientHeight;
+					for(let i= aImg.length-1;i>=0;i--){
+						let oImg = aImg[i]
+						if(oTop(aImg[i]) <= Top +200){
+							aImg[i].src = aImg[i].getAttribute("rsrc")
+							aImg.splice(i,1);
+						}
+						
+					}
+				}
+				
+//              function scroll(){
+//                  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+//                  let Top = scrollTop + document.documentElement.clientHeight;
+//                  for (let i = aImg.length-1; i >= 0; i--) {
+//                      let oImg = aImg[i];
+//                      if ( oTop(oImg) <= Top + 200 ){
+//                          oImg.src = oImg.getAttribute("rsrc");
+//                          aImg.splice(i,1);
+//                      }
+//                      console.log(oTop(oImg))
+//                  }
+//              }				
+				
+				
+				function oTop(obj){
+					let x = 0;
+                    while (obj !== document.body){
+                        x += obj.offsetTop;
+                        obj = obj.offsetParent;
+                    }
+                    return x;
+				}
+			})();
+	</script>
+	</body>
+</html>

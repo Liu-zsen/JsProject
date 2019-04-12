@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Jquery图片延时加载</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul,li{list-style: none;}
+			#box{
+				position: relative;
+			}
+			#box img{
+				height : 340px
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<ul>
+				<li>
+					<p>大家好</p>
+					<p>大家好</p>
+					<p>大家好大家好大家好大家好大家好大家好大家好大家好大家好大家好</p>
+					<p>大家好</p>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<img data-original="img/1.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<p>我是图片3</p>
+					<img data-original="img/2.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/3.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/4.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/5.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/6.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/7.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/8.jpg" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/01.webp" alt="" />
+				</li>
+				<li>
+					<p>我是图片1</p>
+					<p>我是图片2</p>
+					<p>我是图片3</p>
+					<img data-original="img/05.webp" alt="" />
+				</li>
+			</ul>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+	<script>
+		$("img").lazyload({
+			effect : 'fadeIn',
+			placeholder : "img/loading.jpg"
+		})
+	</script>
+	</body>
+</html>

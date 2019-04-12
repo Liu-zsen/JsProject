@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>打印星形三角</title>
+		<style>
+			*{
+				margin:0;
+				padding: 0;
+				font-family: "微软雅黑", serif;
+				list-style: none;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script type="text/javascript">
+			var oBox = document.getElementById("box");
+			var length = 5
+/*			for(var i=0;i<length;i++){  //遍历
+				
+				//添加空格
+				for(var k=0;k<length-i;k++){
+					oBox.innerHTML += "&nbsp"
+				}
+				
+				//添加*号
+				for(var j=0;j<2*i+1	;j++){
+					oBox.innerHTML += "*";
+				}
+				//添加换行
+				oBox.innerHTML += "<br>"
+				
+			}*/
+			for(var i=0;i<length;i++){  //遍历
+				
+				//添加空格
+				for(var k=0;k<i;k++){
+					oBox.innerHTML += "&nbsp"
+								console.log(k)
+				}
+	
+				//添加*号
+				for(var j=0;j<length-i;j++){
+					oBox.innerHTML += "*";
+				}
+				//添加换行
+				oBox.innerHTML += "<br>"
+				
+			}
+		</script>
+		</body>
+</html>

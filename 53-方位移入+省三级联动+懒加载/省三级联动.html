@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>省三级联动</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				width: 350px;
+				margin: 100px auto;
+			}
+			#box select{
+				width:100px;
+				height: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="" id="box">
+			<select  id="province" title="省">
+				<option value="null">省</option>	
+			</select>
+			<select  id="city" title="市">
+				<option value="null">市</option>	
+			</select>
+			<select  id="county">
+				<option value="null">县</option>	
+			</select>
+			
+		</div>
+		<script src="js/areaData.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			(function(){
+				let $province = $("#province")
+				let $city = $("#city")
+				let $county = $("#county")
+				
+				//创建省
+				createPro();
+				
+				//当$province发生改变时执行
+				$province.change(function(){
+					let index = $(this).val()//获取的当前value值（序号）
+					clearCity()
+					createCity(index);
+				})
+				
+				//当$city发生改变时执行
+				$city.change(function(){
+					let index = $(this).val()//获取的当前value值（序号）
+					clearCounty()
+					createCounty(index)
+				})
+				
+				//省函数
+				function createPro(){
+					let data = areaData.sheng
+					$.each(data, function(i,d) {
+						$province.append(`<option value=${i}>${d}</option>`)
+					});
+				}
+				
+				//市函数
+				function createCity(index){
+					let data = areaData.shi[`a_${index}`]
+					$.each(data, function(i,d) {
+						$city.append(`<option value=${i}>${d}</option>`)
+					});
+				}
+				
+				//县函数
+				function createCounty(index){
+					let Pindex = $province.val();	//获取当前省的序号值
+					let data = areaData.xian[`a_${Pindex}_${index}`];
+					$.each(data,function(i,d){
+						$county.append(`<option value=${i}>${d}</option>`)
+					})
+				}
+				
+				//清空
+				function clearCity(){
+					$city.html(`<option>市</option>`)
+					clearCounty()
+				}
+				function clearCounty(){
+					$county.html(`<option>县</option>`)
+				}
+			})();
+		</script>
+<!--
+		<script>
+			(function(){
+				let $province = $("#province")
+				let $city = $("#city")
+				let $county = $("#county")
+				
+				createPro();
+				
+				//省改变时创建市
+				$province.change(function(){
+					let index = $(this).val();
+					clearCity()
+					createCity(index);
+				})
+				
+				//市改变时创建县
+				$city.change(function(){
+					let index = $(this).val();
+					clearCounty()
+					createCounty(index)
+				})
+				
+				//省函数
+				function createPro(){
+					let data = areaData.sheng
+					$.each(data, function(i,d) {
+						$province.append(`<option value=${i}>${d}</option>`)
+					});
+					
+				}
+				
+				//市函数
+				function createCity(index){
+					let data = areaData.shi[`a_${index}`]
+					$.each(data, function(i,d) {
+						$city.append(`<option value=${i}>${d}</option>`)
+					});
+					createCounty(index);
+				}
+				
+				//县函数
+				function createCounty(index){
+					let Pindex = $province.val()
+					let data = areaData.xian[`a_${Pindex}_${index}`];
+					$.each(data, function(i,d) {
+						$county.append(`<option value=${i}>${d}</option>`)
+					});
+				}
+				
+				
+				function clearCity(){
+					$city.html(`<option value=null>市</option>`)		
+					clearCounty()
+				}
+				function clearCounty(){
+					$county.html(`<option value=null>县</option>`)		
+				}
+			})();
+		</script>
+		-->
+	</body>
+</html>

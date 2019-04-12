@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  max-width: 750px;
+  margin: auto;
+}
+a,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
+  color: #666;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #74777b;
+}
+img {
+  vertical-align: top;
+}
+.clearFix::after {
+  content: '';
+  display: block;
+  clear: both;
+  zoom: 1;
+  overflow: hidden;
+}
+input[type="text"],
+input[type="password"] {
+  font-size: 0.4rem;
+  letter-spacing: 2px;
+  color: #ccc;
+}
+input[type="text"]::-webkit-input-placeholder,
+input[type="password"]::-webkit-input-placeholder {
+  letter-spacing: 2px;
+  color: #ccc;
+}
+input[type="text"]:-moz-placeholder,
+input[type="password"]:-moz-placeholder {
+  letter-spacing: 2px;
+  color: #ccc;
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+input[type="password"]:focus {
+  letter-spacing: 5px;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea,
+select,
+legend {
+  display: block;
+  width: 100%;
+  border: none;
+  caret-color: #EF2D2D;
+  letter-spacing: 2px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}

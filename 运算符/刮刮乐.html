@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>刮刮乐</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				position: relative;
+				width: 320px;
+				height:240px;
+				margin:50px auto;
+			}
+			#box .content{
+				width: 100%;
+				height: 100%;
+			}
+			#box .content img{
+				width: 100%;
+				height: 100%;
+				}
+			#box .cover{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}	
+			#box .cover span{
+				display:block;
+				float: left;
+				width: 20px;
+				height: 20px;
+				background-color: #ddd ;
+			}
+			#box .cover span.tra{
+				background-color: transparent;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div class="content"><img src="img/2.jpg" alt="" /></div>
+			<div class="cover"></div>
+		</div>
+		<script type="text/javascript">
+			var abox = document.getElementById("box"),
+				aHide = abox.querySelector(".cover") ,
+				Str = ""
+				
+				
+			for (var i=0,length=16*12;i<length;i++) {
+				Str += "<span></span>"
+			}
+			aHide.innerHTML = Str
+			
+			aspan = abox.querySelectorAll(".cover span")
+			
+			for(i=0;i<length;i++){
+				aspan[i].onmouseenter = function(){
+					this.className = "tra"
+				}
+			}
+			
+		</script>
+	</body>
+</html>

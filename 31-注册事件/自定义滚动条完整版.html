@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义滚动条</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				overflow: hidden;
+				position: relative;
+				width: 740px;
+				height: 510px;
+				margin: 80px auto;
+				background: #fbf384;
+				user-select:none;
+			}
+			.content{
+				position: absolute;
+				padding: 15px;
+			}
+			.content .pbold{
+				font-size: 18px;
+				font-weight: bold;
+			}
+			.content p{
+				padding: 10px 0;;
+			}
+			#scroll{
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 15px;
+				height: 100%;
+				background: -webkit-linear-gradient(#8ddaf3,#ea6bf4);
+				background: linear-gradient(#8ddaf3,#ea6bf4);/* 标准语法 (必须在最后) */
+				filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#8ddaf3',endColorStr='#ea6bf4',gradientType='0'); 
+				
+			}
+			#scroll .slider{
+				position: absolute;
+				width: 100%;
+				background: #2e2e2e;
+				border-radius: 7px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div class="content">
+				<h3>啊甘正传</h3>
+                <p class="pbold">1、Life was like a box of chocolates, you never know what you're going to get.</p>
+				<p>生命就像一盒巧克力，结果往往出人意料。</p>
+				<p class="pbold">2、Stupid is as stupid does.</p>
+				<p>蠢人做蠢事，也可理解为傻人有傻福。</p>
+				<p class="pbold">3、Miracles happen every day.</p>
+				<p>奇迹每天都在发生。</p>
+				<p class="pbold">4、it made me look like a duck in water.</p>
+				<p>它让我如鱼得水。</p>
+				<p class="pbold">5、I don't know if we each have a destiny, or if we're all just floating around accidental—like on a breeze.</p>
+				<p>我不懂我们是否有着各自的命运，还是只是到处随风飘荡。</p>
+				<p class="pbold">6、Death is just a part of life, something we're all destined to do.</p>
+				<p>死亡是生命的一部分，是我们注定要做的一件事。</p>
+				<p class="pbold">7、You have got to put the past behind you before you can move on.</p>
+				<p>放下包袱，继续前进。</p>
+				<p class="pbold">8、It was like just before the sun goes to bed down on the bayou. There was a million sparkles on the river.</p>
+				<p>就像太阳在落山前映射在河口上，有无数的亮点在闪闪发光。</p>
+				<p class="pbold">9、If there is anything you need, I will not be far away.</p>
+				<p>只要你需要，我就在这里。</p>
+				<p class="pbold">10、I am a man of my word.</p>
+				<p>我是信守承诺的人。</p>
+				<p class="pbold">11、There is one small step for a man,a giant leap for mankind.</p>
+				<p>某人的一小步就是人类的一大步。</p>	
+				<p class="pbold">7、You have got to put the past behind you before you can move on.</p>
+				<p>放下包袱，继续前进。</p>
+				<p class="pbold">8、It was like just before the sun goes to bed down on the bayou. There was a million sparkles on the river.</p>
+				<p>就像太阳在落山前映射在河口上，有无数的亮点在闪闪发光。</p>
+				<p class="pbold">9、If there is anything you need, I will not be far away.</p>
+				<p>只要你需要，我就在这里。</p>
+				<p class="pbold">10、I am a man of my word.</p>
+				<p>我是信守承诺的人。</p>
+				<p class="pbold">11、There is one small step for a man,a giant leap for mankind.</p>
+				<p>某人的一小步就是人类的一大步。</p>				
+			</div>
+			<div id="scroll">
+				<div class="slider"></div>
+			</div>
+		</div>
+		
+		<script>
+			
+			let oBox = document.getElementById('box')
+			let conTent = oBox.querySelector('.content')
+			let slider = document.querySelector('#scroll .slider')
+			let scroll = document.getElementById('scroll')
+			let Height =(oBox.clientHeight*oBox.clientHeight/oBox.scrollHeight)	//求 slider的高 
+			let MaxT = oBox.clientHeight - Height  //滑块的移动的最大高
+			slider.style.height = Height + "px";
+			
+			//鼠标点击事件
+			slider.onmousedown = function(e){
+				e = e || window.event
+				e.cancelBubble = true;
+				let downY = e.clientY
+				let sTop = slider.offsetTop	//定义滑块的初始Top值
+				document.onmousemove = function(e){
+					e = e || window.event
+					let Top = e.clientY - downY + sTop //求变化量
+					setTop(Top);
+				}
+			}
+			document.onmouseup = function(){		//抬起清空move事件
+				document.onmousemove = null
+			}
+						
+			
+			function setTop(vary){
+					vary = Math.max(0,vary) 	//限定最小值，取最大值  	//可以这样记(定值，变化值)
+					vary = Math.min(MaxT,vary)	//限定最大值，取最小值 		//可以这样记((定值，变化值)
+					slider.style.top = vary + 'px'
+					
+					let conT = (conTent.scrollHeight)*vary/oBox.clientHeight
+					conTent.style.top = -conT+"px" 	//值取反
+					
+			}
+			
+			//#scroll的 点击事件		
+				scroll.onmousedown = function(e){
+					e = e || window.event
+					// 鼠标点击的后的位置 - oBox距离可视区高  - 滚动条的长度的一半 + 滚动条高
+					let Top =  e.clientY - getTop(oBox).top - Height/2 + (document.documentElement.scrollTop||document.body.scrollTop)
+					setTop(Top)
+				}
+				//求出oBox的距离可视区顶部的距离		
+				function getTop(obj){
+					let json = {
+						left : 0,
+						top : 0
+					}
+					while(obj !== document.body){		//只要为真，while一直循环执行
+						json.left += obj.offsetLeft
+						json.top += obj.offsetTop
+						obj = obj.offsetParent  //将obj的定位父级 赋值给obj	/** * offsetParent  方法返回最近的祖先定位元素 * **/
+					}
+					return json;
+				}
+			
+			//鼠标轮滑
+			wheelmove(oBox,function(e,d){
+				let Top = slider.offsetTop	//获取滑块的初始Top值
+				if(d>0){
+					Top -=15
+				}else{
+					Top +=15
+				}
+				setTop(Top);
+				return false
+			})
+
+			//做兼容
+			function wheelmove(obj,fn){
+				 function eFn(e){
+				 	e = e || window.event
+				 	let detail = (-e.detail/3)  || e.wheelDelta/120
+				 	
+				 	if(fn(e,detail) === false){
+				 		e.preventDefault();		//阻止默认事件
+				 		e.returnValue = false		//兼容IE
+				 	}
+				 	return false
+				 }
+				let eName = document.onmousewheel===null?'mousewheel' : 'DOMMouseScroll'	//做火狐兼容
+				if(document.addEventLisener === undefined){			//做主流和IE兼容
+					obj.addEventListener(eName,eFn,false)
+				}else{
+					obj.attachEvent('on'+eName,eFn)
+				}
+			}
+		</script>
+	</body>
+</html>

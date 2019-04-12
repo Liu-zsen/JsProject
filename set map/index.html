@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Set</title>
+	</head>
+	<body>
+		<script>
+			
+			//Set函数  
+			//数组去重方法
+			//只接收数组，不接收类数组
+			//方法有
+			// .add()  添加某个值，返回Set本身
+			//	.size() 返回Set的长度
+			//	.delete() 删除某个值，返回布尔值
+			//  .has()	返回布尔朱，是否为Set里的成员
+			//  .clear() 清除清除所有成员，没有返回值
+			let arr = [1,2,66,12,12,2,3,7,9]
+			let x = [...new Set(arr)]
+			console.log(x)
+		</script>
+	</body>
+</html>

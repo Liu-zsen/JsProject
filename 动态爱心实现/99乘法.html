@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>99乘法</title>
+		<style>
+			*{margin: 0;height: 0;font-family: "微软雅黑";}
+			.dov div{
+				display: inline-block;
+				width: 80px;
+				height: 25px;
+				margin: 5px;
+				line-height: 25px;
+				background: #CCCCCC;
+				border: 1px solid #B1B1B1;
+				text-align: center;
+				vertical-align: middle;
+			}
+			.dov{
+				height: auto;
+				padding: 10px;
+				border-bottom: 1px solid #ddd;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dov" id="box"></div>
+		<div class="dov" id="box2"></div>
+		<script type="text/javascript">
+			var oBox = document.getElementById("box"),
+				 oBox2 = document.getElementById("box2"),
+				length = 10
+			for(var i=0;i<length;i++){
+				for (var k=0;k<i;k++) {
+					oBox.innerHTML += "<div>"+(k+1)+"x"+i+"="+(k+1)*i+"</div>" 
+				}
+				
+				for (var j=0;j<length-i;j++) {
+					oBox.innerHTML += " " 
+				}
+				oBox.innerHTML += "<br>" 
+			}
+			
+				oBox.innerHTML += "<hr>"  
+				
+			for( i=1;i<10;i++){
+				for ( j=i;j<10;j++) {
+					oBox.innerHTML += "<div>"+i+"x"+j+"="+i*j+"</div>" 
+				}
+				oBox.innerHTML += "<br>"
+			}
+			
+				oBox.innerHTML += "<hr>"  
+						
+			for( i=9;1<=i;i--){
+				for ( j=1;j<=i;j++) {
+					oBox.innerHTML += "<div>"+i+"x"+j+"="+i*j+"</div>" 
+				}
+				oBox.innerHTML += "<br>"
+			}
+				oBox.innerHTML += "<hr>"  
+				
+				//4444
+			for( i=9;i>=1;i--){
+				for ( j=i;j<10;j++) {
+					oBox.innerHTML += "<div>"+i+"x"+j+"="+i*j+"</div>" 
+				}
+				oBox.innerHTML += "<br>"
+			}				
+		</script>
+	</body>
+</html>
